@@ -36,7 +36,7 @@ func _physics_process(delta: float) -> void:
 	offset += (KP * error + KI * integral + KD * derivative) * delta
 
 	# Bob the viewmodel while moving
-	var player_projected_velocity = Plane.PLANE_XZ.project(player.velocity).length()
+	var player_projected_velocity = Plane.PLANE_XZ.project(player.linear_velocity).length()
 	viewmodel_bob_phase += player_projected_velocity * BOB_SPEED * delta
 
 	var sine: float = sin(viewmodel_bob_phase)

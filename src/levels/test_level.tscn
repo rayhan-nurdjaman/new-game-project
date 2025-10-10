@@ -133,7 +133,7 @@ mesh = SubResource("BoxMesh_7hvae")
 shape = SubResource("BoxShape3D_6o3kl")
 
 [node name="RigidBody3D5" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 6.5, 0)
 mass = 5.0
 physics_material_override = SubResource("PhysicsMaterial_hdcac")
 
@@ -236,6 +236,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 4)
 polygon = PackedVector2Array(1.3000001, 0, 1.3000001, 2, 1.1, 2.5, 0.6, 2.9, 0, 3, -0.6, 2.9, -1.1, 2.5, -1.3000001, 2, -1.3000001, 0, -1.5, 0, -1.5, 4, 1.5, 4, 1.5, 0)
 
 [node name="SpawnPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0)
 
 [node name="HingeJoint3D" type="HingeJoint3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

@@ -1,6 +1,6 @@
 class_name Player
 
-extends CharacterBody3D
+extends RigidBody3D
 
 #TODO: Apply opposite force to the player
 
@@ -15,11 +15,11 @@ const JUMP_HEIGHT: float = 1.2
 # Object pickup constants
 const PICKUP_DISTANCE: float = 2.0
 const PICKUP_TRANSLATE_KP: float = 200.0  # PID constants for object pickup
-const PICKUP_TRANSLATE_KI: float = 100.0
+const PICKUP_TRANSLATE_KI: float = 10.0
 const PICKUP_TRANSLATE_KD: float = 20.0
 
 const PICKUP_ROTATE_KP: float = 50.0  # PID constants for object pickup
-const PICKUP_ROTATE_KI: float = 25.0
+const PICKUP_ROTATE_KI: float = 1.0
 const PICKUP_ROTATE_KD: float = 2.0
 
 # Throw constants
@@ -54,6 +54,7 @@ var held_object_original_orientation: Quaternion = Quaternion.IDENTITY
 var gravity_vector: Vector3 = ProjectSettings.get_setting("physics/3d/default_gravity_vector")
 @onready var jump_impulse: float = sqrt(2.0 * JUMP_HEIGHT * gravity)
 
+var move_direction: Vector3 = Vector3.ZERO
 
 func px_to_rad(pixels: float) -> float:
 	const SENS: float = 20.8 / 2.0
@@ -76,7 +77,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			var delta_rot = new_rotation - current_rotation
 			camera.rotate(camera.transform.basis.x, delta_rot)
 
-			self.rotate(Vector3.UP, -px_to_rad(event.relative.x))
+			$Node3D.rotate(Vector3.UP, -px_to_rad(event.relative.x))
 
 			viewmodel_controller.offset += (Vector2(-event.relative.x, event.relative.y) / 8192.0)
 
@@ -134,8 +135,8 @@ func throw_object() -> void:
 
 
 func get_move_direction() -> Vector3:
-	var basis_z: Vector3 = -get_transform().basis.z  # Negative Z axis is forward
-	var basis_x: Vector3 = get_transform().basis.x
+	var basis_z: Vector3 = -$Node3D.get_transform().basis.z  # Negative Z axis is forward
+	var basis_x: Vector3 = $Node3D.get_transform().basis.x
 	var input_forward: float = (
 		Input.get_action_strength("move_forward") - Input.get_action_strength("move_backward")
 	)
@@ -148,18 +149,55 @@ func get_move_direction() -> Vector3:
 	return move_direction.normalized()
 
 
-func move(move_direction: Vector3, delta: float) -> void:
-	if is_on_floor():
-		var accel_friction: Vector3 = (
-			gravity * FRICTION * Plane.PLANE_XZ.project(-velocity.normalized())
-		)
-		velocity += (
-			accel_friction.normalized() * min(accel_friction.length() * delta, velocity.length())
-		)
+#func move(move_direction: Vector3, delta: float) -> void:
+	#if is_on_floor():
+		#var accel_friction: Vector3 = (
+			#gravity * FRICTION * Plane.PLANE_XZ.project(-velocity.normalized())
+		#)
+		#velocity += (
+			#accel_friction.normalized() * min(accel_friction.length() * delta, velocity.length())
+		#)
+#
+	#var speed: float
+	#var accel: float
+	#if is_on_floor():
+		#speed = SPEED_GROUND
+		#accel = ACCEL_GROUND
+	#else:
+		#speed = SPEED_AIR
+		#accel = ACCEL_AIR
+#
+	#var accel_move: Vector3 = accel * move_direction
+	#var speed_target: float = move_direction.length() * speed
+	#var speed_projection: float = velocity.dot(accel_move.normalized())
+#
+	#velocity += (
+		#accel_move.normalized()
+		#* min(accel_move.length() * delta, max(speed_target - speed_projection, 0.0))
+	#)
+#
+	#if not is_on_floor():
+		#velocity += gravity * gravity_vector * delta
+	#elif Input.is_action_just_pressed("move_jump"):  # Is on floor
+		#velocity += -gravity_vector * jump_impulse
 
+
+func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
+	var is_on_floor: bool = false
+	var count: int = state.get_contact_count()
+	var max_cosine: float = cos(PI/4.0)
+	
+	for contact_id in range(count):
+		var normal: Vector3 = state.get_contact_local_normal(contact_id)
+		if normal.dot(Vector3.UP) >= max_cosine:
+			is_on_floor = true
+			break
+	
+	print(is_on_floor)
+	
 	var speed: float
 	var accel: float
-	if is_on_floor():
+	if is_on_floor:
 		speed = SPEED_GROUND
 		accel = ACCEL_GROUND
 	else:
@@ -168,17 +206,17 @@ func move(move_direction: Vector3, delta: float) -> void:
 
 	var accel_move: Vector3 = accel * move_direction
 	var speed_target: float = move_direction.length() * speed
-	var speed_projection: float = velocity.dot(accel_move.normalized())
+	var speed_projection: float = linear_velocity.dot(move_direction)
+	
+	state.apply_central_impulse(accel_move.normalized() * mass * min(accel_move.length() * state.step, max(speed_target - speed_projection, 0.0)))
+#
+	#velocity += (
+		#accel_move.normalized()
+		#)
+	#)
 
-	velocity += (
-		accel_move.normalized()
-		* min(accel_move.length() * delta, max(speed_target - speed_projection, 0.0))
-	)
-
-	if not is_on_floor():
-		velocity += gravity * gravity_vector * delta
-	elif Input.is_action_just_pressed("move_jump"):  # Is on floor
-		velocity += -gravity_vector * jump_impulse
+	if is_on_floor and Input.is_action_just_pressed("move_jump"):
+		state.apply_central_impulse(-gravity_vector * mass * jump_impulse)
 
 
 func update_held_object(delta: float) -> void:
@@ -198,7 +236,8 @@ func update_held_object(delta: float) -> void:
 			translation_error * PICKUP_TRANSLATE_KP + pickup_translation_integral * PICKUP_TRANSLATE_KI + translation_derivative * PICKUP_TRANSLATE_KD
 		)
 
-		held_object.apply_central_force(force.clamp(Vector3(-50, -50, -50), Vector3(50, 50, 50)))
+		held_object.apply_central_force(force)
+		apply_central_force(-force)
 
 		var current_quat: Quaternion = held_object.global_transform.basis.get_rotation_quaternion()
 		var target_quat: Quaternion = camera.global_transform.basis.get_rotation_quaternion() * held_object_original_orientation
@@ -221,10 +260,10 @@ func update_held_object(delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var move_direction: Vector3 = Vector3.ZERO
+	move_direction = Vector3.ZERO
 	move_direction = get_move_direction()
-	move(move_direction, delta)
-	move_and_slide()
+	#move(move_direction, delta)
+	#move_and_slide()
 	update_held_object(delta)
 	
 	var new_basis := Basis.IDENTITY

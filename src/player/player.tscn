@@ -9,32 +9,41 @@
 radius = 0.1
 height = 0.2
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera", "raycast", "viewmodel_controller")]
-collision_layer = 2
+[node name="Player" type="RigidBody3D" node_paths=PackedStringArray("camera", "raycast", "viewmodel_controller")]
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+mass = 5.0
+can_sleep = false
+contact_monitor = true
+max_contacts_reported = 16
 script = ExtResource("1_4flbx")
-camera = NodePath("Camera3D")
-raycast = NodePath("Camera3D/RayCast3D")
-viewmodel_controller = NodePath("Camera3D/ViewmodelController")
+camera = NodePath("Node3D/Camera3D")
+raycast = NodePath("Node3D/Camera3D/RayCast3D")
+viewmodel_controller = NodePath("Node3D/Camera3D/ViewmodelController")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_4flbx")
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+current = true
 fov = 90.0
 
-[node name="RayCast3D" type="RayCast3D" parent="Camera3D"]
+[node name="RayCast3D" type="RayCast3D" parent="Node3D/Camera3D"]
 target_position = Vector3(0, 0, -3)
 collision_mask = 53
 collide_with_areas = true
 
-[node name="ViewmodelController" type="Node3D" parent="Camera3D" node_paths=PackedStringArray("player", "camera", "viewmodel")]
+[node name="ViewmodelController" type="Node3D" parent="Node3D/Camera3D" node_paths=PackedStringArray("player", "camera", "viewmodel")]
 script = ExtResource("2_mf2ua")
-player = NodePath("../..")
+player = NodePath("../../..")
 camera = NodePath("..")
 viewmodel = NodePath("MeshInstance3D")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D/ViewmodelController"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D/Camera3D/ViewmodelController"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.30000007, -0.4)
 mesh = SubResource("SphereMesh_rxibo")
