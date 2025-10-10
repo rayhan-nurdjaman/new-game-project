@@ -1,0 +1,79 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxwrqhxka77lb"]
+
+[ext_resource type="Script" uid="uid://c6fblnyp41idq" path="res://src/ui/pause_menu/pause_menu.gd" id="1_tnmsp"]
+[ext_resource type="Theme" uid="uid://ct7oxof1hdkeo" path="res://res/theme.tres" id="2_t0xlp"]
+[ext_resource type="Script" uid="uid://ds0ii545dct55" path="res://src/ui/button_style_components/button_resize_component.gd" id="3_vvyjd"]
+
+[node name="PauseMenu" type="CanvasLayer"]
+script = ExtResource("1_tnmsp")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.2509804)
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_t0xlp")
+
+[node name="Polygon2D2" type="Polygon2D" parent="ColorRect/MarginContainer"]
+color = Color(0.9411765, 0.47058824, 0, 1)
+polygon = PackedVector2Array(-111, 330, -567, 328, -567, 1201, 419, 1200)
+
+[node name="Polygon2D" type="Polygon2D" parent="ColorRect/MarginContainer"]
+color = Color(1, 0.5647059, 0, 1)
+polygon = PackedVector2Array(292, -152, -631, -147, -629, 1225, 43, 1222)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Paused"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="Resume" type="Button" parent="ColorRect/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+text = "Resume"
+
+[node name="ButtonResizeComponent" type="Node" parent="ColorRect/MarginContainer/VBoxContainer/VBoxContainer/Resume"]
+script = ExtResource("3_vvyjd")
+metadata/_custom_type_script = "uid://ds0ii545dct55"
+
+[node name="Settings" type="Button" parent="ColorRect/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+text = "Settings"
+
+[node name="ButtonResizeComponent" type="Node" parent="ColorRect/MarginContainer/VBoxContainer/VBoxContainer/Settings"]
+script = ExtResource("3_vvyjd")
+metadata/_custom_type_script = "uid://ds0ii545dct55"
+
+[node name="MainMenu" type="Button" parent="ColorRect/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+text = "Main Menu"
+
+[node name="ButtonResizeComponent" type="Node" parent="ColorRect/MarginContainer/VBoxContainer/VBoxContainer/MainMenu"]
+script = ExtResource("3_vvyjd")
+metadata/_custom_type_script = "uid://ds0ii545dct55"
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]

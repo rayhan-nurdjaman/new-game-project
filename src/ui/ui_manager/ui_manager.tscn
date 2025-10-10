@@ -1,0 +1,22 @@
+[gd_scene load_steps=7 format=3 uid="uid://dbqw3fb20nrs8"]
+
+[ext_resource type="Script" uid="uid://d1n55i1lsdj67" path="res://src/ui/ui_manager/ui_manager.gd" id="1_1xrw1"]
+[ext_resource type="PackedScene" uid="uid://ben015ddg3i15" path="res://src/ui/main_menu/main_menu.tscn" id="2_06kls"]
+[ext_resource type="PackedScene" uid="uid://37rlqmnr4uqf" path="res://src/ui/loading_screen/loading_screen.tscn" id="3_0wk4j"]
+[ext_resource type="PackedScene" uid="uid://dxwrqhxka77lb" path="res://src/ui/pause_menu/pause_menu.tscn" id="3_v1lk4"]
+[ext_resource type="PackedScene" uid="uid://bcg040sdcwn84" path="res://src/ui/console/console.tscn" id="4_duyv2"]
+[ext_resource type="PackedScene" uid="uid://dhqyoeojs2xo3" path="res://src/ui/hud/hud.tscn" id="5_eg4bn"]
+
+[node name="UIManager" type="Node"]
+process_mode = 3
+script = ExtResource("1_1xrw1")
+
+[node name="HUD" parent="." instance=ExtResource("5_eg4bn")]
+
+[node name="MainMenu" parent="." instance=ExtResource("2_06kls")]
+
+[node name="PauseMenu" parent="." instance=ExtResource("3_v1lk4")]
+
+[node name="LoadingScreen" parent="." instance=ExtResource("3_0wk4j")]
+
+[node name="Console" parent="." instance=ExtResource("4_duyv2")]
