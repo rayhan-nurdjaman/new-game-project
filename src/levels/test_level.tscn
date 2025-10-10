@@ -81,14 +81,6 @@ height = 1.0
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_t1chq"]
 height = 1.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6o3kl"]
-albedo_texture = ExtResource("1_1ky7t")
-uv1_triplanar = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7hvae"]
-albedo_texture = ExtResource("4_br53r")
-uv1_triplanar = true
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_woqy2"]
 albedo_texture = ExtResource("9_b7rnw")
 uv1_triplanar = true
@@ -108,6 +100,14 @@ uv1_triplanar = true
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_202rx"]
 data = PackedVector3Array(0, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6o3kl"]
+albedo_texture = ExtResource("1_1ky7t")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7hvae"]
+albedo_texture = ExtResource("4_br53r")
+uv1_triplanar = true
+
 [node name="TestLevel" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -121,8 +121,12 @@ camera_attributes = SubResource("CameraAttributesPractical_t1chq")
 [node name="CameraMarker" type="Marker3D" parent="."]
 transform = Transform3D(-0.7071068, -0.35355335, 0.6123724, 0, 0.8660254, 0.5, -0.7071067, 0.3535534, -0.6123724, 7, 4, -7)
 
+[node name="SpawnPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0)
+
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -2)
+mass = 5.0
 physics_material_override = SubResource("PhysicsMaterial_hdcac")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
@@ -133,8 +137,8 @@ mesh = SubResource("BoxMesh_7hvae")
 shape = SubResource("BoxShape3D_6o3kl")
 
 [node name="RigidBody3D5" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 6.5, 0)
-mass = 5.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, -2)
+mass = 10.0
 physics_material_override = SubResource("PhysicsMaterial_hdcac")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D5"]
@@ -146,6 +150,7 @@ shape = SubResource("BoxShape3D_6o3kl")
 
 [node name="RigidBody3D2" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.5, -2)
+mass = 2.0
 physics_material_override = SubResource("PhysicsMaterial_hdcac")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D2"]
@@ -157,6 +162,7 @@ shape = SubResource("BoxShape3D_7hvae")
 
 [node name="RigidBody3D3" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.5, -2)
+mass = 5.0
 physics_material_override = SubResource("PhysicsMaterial_hdcac")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D3"]
@@ -168,6 +174,7 @@ shape = SubResource("SphereShape3D_t1chq")
 
 [node name="RigidBody3D4" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.5, -2)
+mass = 5.0
 physics_material_override = SubResource("PhysicsMaterial_hdcac")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D4"]
@@ -177,74 +184,9 @@ mesh = SubResource("CylinderMesh_7hvae")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D4"]
 shape = SubResource("CylinderShape3D_t1chq")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-material_override = SubResource("StandardMaterial3D_6o3kl")
-use_collision = true
-size = Vector3(16, 1, 16)
-
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
-material_override = SubResource("StandardMaterial3D_7hvae")
-use_collision = true
-
-[node name="CSGPolygon3D" type="CSGPolygon3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
-use_collision = true
-polygon = PackedVector2Array(0, 0, 0, 3, 6, 0)
-depth = 3.0
-
-[node name="CSGPolygon3D6" type="CSGPolygon3D" parent="CSGCombiner3D"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -5, 3, 3)
-use_collision = true
-polygon = PackedVector2Array(0, 0, 0, 1, 2, 0)
-depth = 3.0
-
-[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5, -6.5)
-size = Vector3(8, 3, 3)
-
-[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 1.5, 0)
-size = Vector3(3, 3, 16)
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 7.5)
-size = Vector3(16, 3, 1)
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 1.5, 5.5)
-size = Vector3(1, 3, 5)
-
-[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 5.5)
-size = Vector3(16, 1, 5)
-
-[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, 4)
-polygon = PackedVector2Array(1.3000001, 0, 1.3000001, 2, 1.1, 2.5, 0.6, 2.9, 0, 3, -0.6, 2.9, -1.1, 2.5, -1.3000001, 2, -1.3000001, 0, -1.5, 0, -1.5, 4, 1.5, 4, 1.5, 0)
-
-[node name="CSGPolygon3D3" type="CSGPolygon3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 4)
-polygon = PackedVector2Array(1.3000001, 0, 1.3000001, 2, 1.1, 2.5, 0.6, 2.9, 0, 3, -0.6, 2.9, -1.1, 2.5, -1.3000001, 2, -1.3000001, 0, -1.5, 0, -1.5, 4, 1.5, 4, 1.5, 0)
-
-[node name="CSGPolygon3D4" type="CSGPolygon3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 4)
-polygon = PackedVector2Array(1.3000001, 0, 1.3000001, 2, 1.1, 2.5, 0.6, 2.9, 0, 3, -0.6, 2.9, -1.1, 2.5, -1.3000001, 2, -1.3000001, 0, -1.5, 0, -1.5, 4, 1.5, 4, 1.5, 0)
-
-[node name="CSGPolygon3D5" type="CSGPolygon3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 4)
-polygon = PackedVector2Array(1.3000001, 0, 1.3000001, 2, 1.1, 2.5, 0.6, 2.9, 0, 3, -0.6, 2.9, -1.1, 2.5, -1.3000001, 2, -1.3000001, 0, -1.5, 0, -1.5, 4, 1.5, 4, 1.5, 0)
-
-[node name="SpawnPoint" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0)
-
-[node name="HingeJoint3D" type="HingeJoint3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-node_a = NodePath("../StaticBody3D")
-node_b = NodePath("../RigidBody3D6")
-
 [node name="RigidBody3D6" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mass = 20.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D6"]
 material_override = SubResource("StandardMaterial3D_woqy2")
@@ -252,6 +194,11 @@ mesh = SubResource("BoxMesh_q3sum")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D6"]
 shape = SubResource("BoxShape3D_202rx")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+node_a = NodePath("../StaticBody3D")
+node_b = NodePath("../RigidBody3D6")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -262,3 +209,69 @@ mesh = SubResource("PrismMesh_q3sum")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_202rx")
+
+[node name="Geometry" type="Node3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+material_override = SubResource("StandardMaterial3D_6o3kl")
+use_collision = true
+size = Vector3(16, 1, 16)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Geometry"]
+material_override = SubResource("StandardMaterial3D_7hvae")
+use_collision = true
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Geometry/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 3, 6, 0)
+depth = 3.0
+
+[node name="CSGPolygon3D6" type="CSGPolygon3D" parent="Geometry/CSGCombiner3D"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -5, 3, 3)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 1, 2, 0)
+depth = 3.0
+
+[node name="CSGPolygon3D7" type="CSGPolygon3D" parent="Geometry/CSGCombiner3D"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -3, 4, 3)
+use_collision = true
+polygon = PackedVector2Array(-4, 0, -11, 0, -11, 3, -4, 3, 2, 0)
+depth = 5.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Geometry/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5, -6.5)
+size = Vector3(8, 3, 3)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Geometry/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 1.5, 0)
+size = Vector3(3, 3, 16)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Geometry/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 7.5)
+size = Vector3(16, 3, 1)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Geometry/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 1.5, 5.5)
+size = Vector3(1, 3, 5)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Geometry/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 5.5)
+size = Vector3(16, 1, 5)
+
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="Geometry/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, 4)
+polygon = PackedVector2Array(1.3000001, 0, 1.3000001, 2, 1.1, 2.5, 0.6, 2.9, 0, 3, -0.6, 2.9, -1.1, 2.5, -1.3000001, 2, -1.3000001, 0, -1.5, 0, -1.5, 4, 1.5, 4, 1.5, 0)
+
+[node name="CSGPolygon3D3" type="CSGPolygon3D" parent="Geometry/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 4)
+polygon = PackedVector2Array(1.3000001, 0, 1.3000001, 2, 1.1, 2.5, 0.6, 2.9, 0, 3, -0.6, 2.9, -1.1, 2.5, -1.3000001, 2, -1.3000001, 0, -1.5, 0, -1.5, 4, 1.5, 4, 1.5, 0)
+
+[node name="CSGPolygon3D4" type="CSGPolygon3D" parent="Geometry/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 4)
+polygon = PackedVector2Array(1.3000001, 0, 1.3000001, 2, 1.1, 2.5, 0.6, 2.9, 0, 3, -0.6, 2.9, -1.1, 2.5, -1.3000001, 2, -1.3000001, 0, -1.5, 0, -1.5, 4, 1.5, 4, 1.5, 0)
+
+[node name="CSGPolygon3D5" type="CSGPolygon3D" parent="Geometry/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 4)
+polygon = PackedVector2Array(1.3000001, 0, 1.3000001, 2, 1.1, 2.5, 0.6, 2.9, 0, 3, -0.6, 2.9, -1.1, 2.5, -1.3000001, 2, -1.3000001, 0, -1.5, 0, -1.5, 4, 1.5, 4, 1.5, 0)

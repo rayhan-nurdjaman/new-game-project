@@ -49,4 +49,4 @@ func _physics_process(delta: float) -> void:
 		viewmodel_initial_transform.origin.x + BOB_AMPLITUDE_X * sine + offset.x
 	)
 	
-	get_parent().transform.origin.y = 1.5 + 0.1 * abs(sine) * abs(cosine)
+	#get_parent().transform.origin.y = 1.5 + 0.1 * abs(sine) * abs(cosine)

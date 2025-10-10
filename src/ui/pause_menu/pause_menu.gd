@@ -2,8 +2,8 @@ extends CanvasLayer
 
 
 func _ready() -> void:
-	$ColorRect/MarginContainer/VBoxContainer/VBoxContainer/Resume.pressed.connect(_on_resume_pressed)
-	$ColorRect/MarginContainer/VBoxContainer/VBoxContainer/MainMenu.pressed.connect(_on_main_menu_pressed)
+	$TextureRect/MarginContainer/VBoxContainer/VBoxContainer/Resume.pressed.connect(_on_resume_pressed)
+	$TextureRect/MarginContainer/VBoxContainer/VBoxContainer/MainMenu.pressed.connect(_on_main_menu_pressed)
 
 
 func _on_resume_pressed():

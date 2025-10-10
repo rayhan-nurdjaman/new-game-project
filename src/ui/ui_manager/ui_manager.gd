@@ -9,15 +9,14 @@ func _ready() -> void:
 	
 	$LoadingScreen.finished_fade_in.connect(SceneLoader._on_finished_fade_in)
 	$MainMenu.offset = Vector2(-1920.0, 0.0)
+	$PauseMenu.offset = Vector2(-1920.0, 0.0)
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("console"):
 		if $Console.visible:
 			$Console.hide()
-			#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		else:
 			$Console.popup()
-			#Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	if Input.is_action_just_pressed("ui_cancel"):
 		if GameState.state == GameState.State.IN_GAME:
 			GameState.change_state_to(GameState.State.PAUSED)
@@ -25,20 +24,31 @@ func _process(delta: float) -> void:
 			GameState.change_state_to(GameState.State.IN_GAME)
 
 func _on_game_state_changed(old_state, new_state):
-	#$HUD.visible = new_state == GameState.State.IN_GAME
 	var main_menu_position: Vector2
 	if new_state == GameState.State.MAIN_MENU:
 		main_menu_position = Vector2.ZERO
 	else:
 		main_menu_position = Vector2(-1920.0, 0.0)
-	var tween = create_tween()
-	tween.set_ignore_time_scale(true)
-	tween.set_ease(Tween.EASE_IN_OUT)
-	tween.set_trans(Tween.TRANS_CUBIC)
-	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween.tween_property($MainMenu, "offset", main_menu_position, 1.0)
+	var main_menu_tween = create_tween()
+	main_menu_tween.set_ignore_time_scale(true)
+	main_menu_tween.set_ease(Tween.EASE_IN_OUT)
+	main_menu_tween.set_trans(Tween.TRANS_CUBIC)
+	main_menu_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	main_menu_tween.tween_property($MainMenu, "offset", main_menu_position, 0.5)
 	
-	$PauseMenu.visible = new_state == GameState.State.PAUSED
+	var pause_menu_position: Vector2
+	if new_state == GameState.State.PAUSED:
+		pause_menu_position = Vector2.ZERO
+	else:
+		pause_menu_position = Vector2(-1920.0, 0.0)
+	var pause_menu_tween = create_tween()
+	pause_menu_tween.set_ignore_time_scale(true)
+	pause_menu_tween.set_ease(Tween.EASE_IN_OUT)
+	pause_menu_tween.set_trans(Tween.TRANS_CUBIC)
+	pause_menu_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	pause_menu_tween.tween_property($PauseMenu, "offset", pause_menu_position, 0.5)
+	
+	#$PauseMenu.visible = new_state == GameState.State.PAUSED
 	$HUD.visible = new_state == GameState.State.IN_GAME
 	
 	$LoadingScreen.visible = (

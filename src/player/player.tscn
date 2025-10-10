@@ -1,7 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cosflewrtevhb"]
+[gd_scene load_steps=6 format=3 uid="uid://cosflewrtevhb"]
 
 [ext_resource type="Script" uid="uid://f3ke6ankcxq8" path="res://src/player/player.gd" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://d15swdm2cydb1" path="res://src/player/viewmodel_controller.gd" id="2_mf2ua"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rxibo"]
+friction = 0.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4flbx"]
 
@@ -13,8 +16,10 @@ height = 0.2
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
-mass = 5.0
+mass = 50.0
+physics_material_override = SubResource("PhysicsMaterial_rxibo")
 can_sleep = false
+continuous_cd = true
 contact_monitor = true
 max_contacts_reported = 16
 script = ExtResource("1_4flbx")

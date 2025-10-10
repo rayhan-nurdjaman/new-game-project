@@ -3,6 +3,8 @@ class_name Player
 extends RigidBody3D
 
 #TODO: Apply opposite force to the player
+#TODO: Have proper force thing when jumping off of rigidbodies
+#TODO: Have stair movement using test_move
 
 # Physical movement constants
 const ACCEL_GROUND: float = 40.0
@@ -186,14 +188,27 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	var is_on_floor: bool = false
 	var count: int = state.get_contact_count()
 	var max_cosine: float = cos(PI/4.0)
+	var rigidbody_floor: RigidBody3D = null
+	var normal: Vector3 = Vector3.ZERO
 	
 	for contact_id in range(count):
-		var normal: Vector3 = state.get_contact_local_normal(contact_id)
+		normal = state.get_contact_local_normal(contact_id)
 		if normal.dot(Vector3.UP) >= max_cosine:
 			is_on_floor = true
+			var collider: Object = state.get_contact_collider_object(contact_id)
+			if collider is RigidBody3D:
+				rigidbody_floor = collider
 			break
 	
 	print(is_on_floor)
+	
+	if is_on_floor:
+		var accel_friction: Vector3 = (
+			gravity * FRICTION * Plane.PLANE_XZ.project(-linear_velocity.normalized())
+		)
+		state.apply_central_impulse(
+			mass * accel_friction.normalized() * min(accel_friction.length() * state.step, linear_velocity.length())
+		)
 	
 	var speed: float
 	var accel: float
@@ -203,21 +218,27 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	else:
 		speed = SPEED_AIR
 		accel = ACCEL_AIR
-
-	var accel_move: Vector3 = accel * move_direction
-	var speed_target: float = move_direction.length() * speed
-	var speed_projection: float = linear_velocity.dot(move_direction)
+	
+	var rotation_axis: Vector3 = normal.cross(Vector3.UP).normalized()
+	var angle: float = normal.signed_angle_to(Vector3.UP, rotation_axis)
+	var rotated_move_direction: Vector3
+	
+	if is_zero_approx(angle):
+		rotated_move_direction = move_direction
+	else:
+		rotated_move_direction = move_direction.rotated(rotation_axis, -angle)
+	
+	
+	var accel_move: Vector3 = accel * rotated_move_direction
+	var speed_target: float = rotated_move_direction.length() * speed
+	var speed_projection: float = linear_velocity.dot(rotated_move_direction)
 	
 	state.apply_central_impulse(accel_move.normalized() * mass * min(accel_move.length() * state.step, max(speed_target - speed_projection, 0.0)))
-#
-	#velocity += (
-		#accel_move.normalized()
-		#)
-	#)
 
 	if is_on_floor and Input.is_action_just_pressed("move_jump"):
 		state.apply_central_impulse(-gravity_vector * mass * jump_impulse)
-
+		if rigidbody_floor:
+			rigidbody_floor.apply_central_impulse(gravity_vector * mass * jump_impulse)
 
 func update_held_object(delta: float) -> void:
 	if held_object:
