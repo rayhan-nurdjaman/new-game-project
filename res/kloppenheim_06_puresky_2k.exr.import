@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cmplqj6fcby0f"
-path.bptc="res://.godot/imported/drakensberg_solitary_mountain_puresky_4k.exr-15983b7866e14480840cee2a7bb2cebc.bptc.ctex"
+uid="uid://clpkjtx414kkm"
+path.bptc="res://.godot/imported/kloppenheim_06_puresky_2k.exr-cfe9b78eaa5f907ded33b5cefdd29049.bptc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://res/drakensberg_solitary_mountain_puresky_4k.exr"
-dest_files=["res://.godot/imported/drakensberg_solitary_mountain_puresky_4k.exr-15983b7866e14480840cee2a7bb2cebc.bptc.ctex"]
+source_file="res://res/kloppenheim_06_puresky_2k.exr"
+dest_files=["res://.godot/imported/kloppenheim_06_puresky_2k.exr-cfe9b78eaa5f907ded33b5cefdd29049.bptc.ctex"]
 
 [params]
 

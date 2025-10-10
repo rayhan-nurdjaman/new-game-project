@@ -1,7 +1,7 @@
 [gd_scene load_steps=37 format=3 uid="uid://dfhsc2ngnj4eh"]
 
 [ext_resource type="Texture2D" uid="uid://vbathh3tav10" path="res://res/dev_textures/dark/texture_01.png" id="1_1ky7t"]
-[ext_resource type="Texture2D" uid="uid://4mnoli3y4m3b" path="res://res/kloofendal_48d_partly_cloudy_puresky_4k.exr" id="1_t1chq"]
+[ext_resource type="Texture2D" uid="uid://clpkjtx414kkm" path="res://res/kloppenheim_06_puresky_2k.exr" id="1_b7rnw"]
 [ext_resource type="Texture2D" uid="uid://82g80kcuolgb" path="res://res/dev_textures/purple/texture_10.png" id="3_7hvae"]
 [ext_resource type="FontFile" uid="uid://deklxx44le2h6" path="res://res/fonts/lexend/Lexend-Bold.ttf" id="3_45v6v"]
 [ext_resource type="Texture2D" uid="uid://dfdpvvl3nojg7" path="res://res/dev_textures/green/texture_10.png" id="3_hdcac"]
@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://cbgd2f7sylu1x" path="res://res/dev_textures/dark/texture_08.png" id="10_7yhca"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_t1chq"]
-panorama = ExtResource("1_t1chq")
+panorama = ExtResource("1_b7rnw")
 
 [sub_resource type="Sky" id="Sky_q3sum"]
 sky_material = SubResource("PanoramaSkyMaterial_t1chq")
