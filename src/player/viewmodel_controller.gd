@@ -41,12 +41,13 @@ func _physics_process(delta: float) -> void:
 	var player_projected_velocity = Plane.PLANE_XZ.project(player.linear_velocity).length()
 	viewmodel_bob_phase += player_projected_velocity * BOB_SPEED * delta * 3.0 / 2.0
 
-	step_counter += player_projected_velocity * BOB_SPEED * delta * 3.0
+	if player.is_on_floor:
+		step_counter += player_projected_velocity * BOB_SPEED * delta * 3.0
 
-	if step_counter >= 2.0*PI:
-		step_counter -= 2.0*PI
-		$AudioStreamPlayer.pitch_scale = randf_range(0.8, 1.2)
-		$AudioStreamPlayer.play()
+		if step_counter >= 2.0*PI:
+			step_counter -= 2.0*PI
+			$AudioStreamPlayer.pitch_scale = randf_range(0.8, 1.2)
+			$AudioStreamPlayer.play()
 
 	var sine: float = sin(viewmodel_bob_phase)
 	var cosine: float = cos(viewmodel_bob_phase)

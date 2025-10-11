@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends UIScreen
 
 signal finished_fade_in
 signal finished_fade_out

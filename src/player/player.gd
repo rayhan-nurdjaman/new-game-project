@@ -51,6 +51,9 @@ var held_object_original_orientation: Quaternion = Quaternion.IDENTITY
 
 var request_jump: bool = false
 
+var is_on_floor: bool = false
+
+
 # Physics variables
 @onready var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready
@@ -74,14 +77,15 @@ func _unhandled_input(event: InputEvent) -> void:
 			held_object_original_orientation = new_basis.get_rotation_quaternion() * held_object_original_orientation
 		else:
 			var vertical_input = -px_to_rad(event.relative.y)
+			var horizontal_input = -px_to_rad(event.relative.x)
 			var current_rotation = -camera.transform.basis.z.signed_angle_to(Vector3.BACK, camera.transform.basis.x)
 			var new_rotation = clamp(current_rotation + vertical_input, -PI / 2, PI / 2)
 			var delta_rot = new_rotation - current_rotation
 			camera.rotate(camera.transform.basis.x, delta_rot)
 
-			$Node3D.rotate(Vector3.UP, -px_to_rad(event.relative.x))
+			$Node3D.rotate(Vector3.UP, horizontal_input)
 
-			viewmodel_controller.offset += (Vector2(-event.relative.x, event.relative.y) / 8192.0)
+			viewmodel_controller.offset += Vector2(horizontal_input, -delta_rot) / 16.0
 
 	if event.is_action_pressed("interact_use"):
 		if held_object:
@@ -156,10 +160,11 @@ func update_move_direction() -> void:
 
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
-	var is_on_floor: bool = false
 	var contact_count: int = state.get_contact_count()
 	var max_floor_cosine: float = cos(PI/4.0)
 	var normal: Vector3 = Vector3.ZERO
+	
+	is_on_floor = false
 	
 	for contact_id in range(contact_count):
 		normal = state.get_contact_local_normal(contact_id)

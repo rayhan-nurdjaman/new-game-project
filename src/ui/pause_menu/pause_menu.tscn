@@ -1,30 +1,24 @@
-[gd_scene load_steps=7 format=3 uid="uid://dxwrqhxka77lb"]
+[gd_scene load_steps=6 format=3 uid="uid://dxwrqhxka77lb"]
 
 [ext_resource type="Script" uid="uid://c6fblnyp41idq" path="res://src/ui/pause_menu/pause_menu.gd" id="1_tnmsp"]
 [ext_resource type="Theme" uid="uid://ct7oxof1hdkeo" path="res://res/theme.tres" id="2_t0xlp"]
+[ext_resource type="FontFile" uid="uid://deklxx44le2h6" path="res://res/fonts/lexend/Lexend-Bold.ttf" id="3_peth0"]
 [ext_resource type="Script" uid="uid://ds0ii545dct55" path="res://src/ui/button_style_components/button_resize_component.gd" id="3_vvyjd"]
 [ext_resource type="Script" uid="uid://dvlm1ln22f2ch" path="res://src/ui/button_style_components/button_sound_component.gd" id="4_j7lcx"]
-
-[sub_resource type="Gradient" id="Gradient_kqx3l"]
-interpolation_mode = 2
-colors = PackedColorArray(0, 0, 0, 0.5019608, 0, 0, 0, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_j7lcx"]
-gradient = SubResource("Gradient_kqx3l")
 
 [node name="PauseMenu" type="CanvasLayer"]
 script = ExtResource("1_tnmsp")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("GradientTexture2D_j7lcx")
+mouse_filter = 2
+color = Color(0, 0, 0, 0.5019608)
 
-[node name="MarginContainer" type="MarginContainer" parent="TextureRect"]
-layout_mode = 1
+[node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -32,67 +26,68 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_t0xlp")
 
-[node name="Polygon2D2" type="Polygon2D" parent="TextureRect/MarginContainer"]
+[node name="Polygon2D2" type="Polygon2D" parent="MarginContainer"]
 color = Color(0.9411765, 0.47058824, 0, 1)
 polygon = PackedVector2Array(-111, 330, -567, 328, -567, 1201, 419, 1200)
 
-[node name="Polygon2D" type="Polygon2D" parent="TextureRect/MarginContainer"]
+[node name="Polygon2D" type="Polygon2D" parent="MarginContainer"]
 color = Color(1, 0.5647059, 0, 1)
 polygon = PackedVector2Array(292, -152, -631, -147, -629, 1225, 43, 1222)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 
-[node name="Label" type="Label" parent="TextureRect/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_peth0")
 text = "Paused"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect/MarginContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 
-[node name="Resume" type="Button" parent="TextureRect/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="Resume" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 focus_mode = 0
 text = "Resume"
 
-[node name="ButtonResizeComponent" type="Node" parent="TextureRect/MarginContainer/VBoxContainer/VBoxContainer/Resume"]
+[node name="ButtonResizeComponent" type="Node" parent="MarginContainer/VBoxContainer/VBoxContainer/Resume"]
 script = ExtResource("3_vvyjd")
 metadata/_custom_type_script = "uid://ds0ii545dct55"
 
-[node name="ButtonSoundComponent" type="Node" parent="TextureRect/MarginContainer/VBoxContainer/VBoxContainer/Resume"]
+[node name="ButtonSoundComponent" type="Node" parent="MarginContainer/VBoxContainer/VBoxContainer/Resume"]
 script = ExtResource("4_j7lcx")
 metadata/_custom_type_script = "uid://dvlm1ln22f2ch"
 
-[node name="Settings" type="Button" parent="TextureRect/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="Settings" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 focus_mode = 0
 text = "Settings"
 
-[node name="ButtonResizeComponent" type="Node" parent="TextureRect/MarginContainer/VBoxContainer/VBoxContainer/Settings"]
+[node name="ButtonResizeComponent" type="Node" parent="MarginContainer/VBoxContainer/VBoxContainer/Settings"]
 script = ExtResource("3_vvyjd")
 metadata/_custom_type_script = "uid://ds0ii545dct55"
 
-[node name="ButtonSoundComponent" type="Node" parent="TextureRect/MarginContainer/VBoxContainer/VBoxContainer/Settings"]
+[node name="ButtonSoundComponent" type="Node" parent="MarginContainer/VBoxContainer/VBoxContainer/Settings"]
 script = ExtResource("4_j7lcx")
 metadata/_custom_type_script = "uid://dvlm1ln22f2ch"
 
-[node name="MainMenu" type="Button" parent="TextureRect/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="MainMenu" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 focus_mode = 0
 text = "Main Menu"
 
-[node name="ButtonResizeComponent" type="Node" parent="TextureRect/MarginContainer/VBoxContainer/VBoxContainer/MainMenu"]
+[node name="ButtonResizeComponent" type="Node" parent="MarginContainer/VBoxContainer/VBoxContainer/MainMenu"]
 script = ExtResource("3_vvyjd")
 metadata/_custom_type_script = "uid://ds0ii545dct55"
 
-[node name="ButtonSoundComponent" type="Node" parent="TextureRect/MarginContainer/VBoxContainer/VBoxContainer/MainMenu"]
+[node name="ButtonSoundComponent" type="Node" parent="MarginContainer/VBoxContainer/VBoxContainer/MainMenu"]
 script = ExtResource("4_j7lcx")
 metadata/_custom_type_script = "uid://dvlm1ln22f2ch"
 

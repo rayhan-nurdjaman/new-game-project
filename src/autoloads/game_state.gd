@@ -23,7 +23,7 @@ func change_state_to(new_state: State):
 	state_changed.emit(old_state, new_state)
 	print_debug(State.keys()[state])
 
-
+# TODO: Add a slow down effect for pausing
 # TODO: This is a bit redundant with GUI.gd
 func _on_state_exit(_state: State):
 	match _state:
@@ -50,3 +50,11 @@ func _on_state_enter(_state: State):
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			Engine.time_scale = 0.0
 			get_tree().paused = true
+
+
+func pause_game():
+	pass
+
+
+func unpause_game():
+	pass

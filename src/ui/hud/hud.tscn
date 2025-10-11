@@ -1,20 +1,42 @@
-[gd_scene load_steps=2 format=3 uid="uid://dhqyoeojs2xo3"]
+[gd_scene load_steps=4 format=3 uid="uid://dhqyoeojs2xo3"]
 
 [ext_resource type="Script" uid="uid://bohewxpq1lt12" path="res://src/ui/hud/hud.gd" id="1_ny4e7"]
+[ext_resource type="Texture2D" uid="uid://bxmle36ilh78w" path="res://res/crosshair.svg" id="2_cvkdw"]
+[ext_resource type="Theme" uid="uid://ct7oxof1hdkeo" path="res://res/theme.tres" id="2_udh2q"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_ny4e7")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_udh2q")
 
-[node name="Label" type="Label" parent="CenterContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer"]
 layout_mode = 2
-mouse_filter = 1
-text = "o"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/CenterContainer"]
+layout_mode = 2
+texture = ExtResource("2_cvkdw")
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 16
+text = "FPS framework built by satiniize
+https://github.com/satiniize/new-game-project"
 horizontal_alignment = 1
-vertical_alignment = 1
+vertical_alignment = 2
+
+[node name="Label2" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "30 | 30"
+horizontal_alignment = 1
+vertical_alignment = 2
