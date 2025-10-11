@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://dfhsc2ngnj4eh"]
+[gd_scene load_steps=43 format=3 uid="uid://dfhsc2ngnj4eh"]
 
 [ext_resource type="Texture2D" uid="uid://vbathh3tav10" path="res://res/dev_textures/dark/texture_01.png" id="1_1ky7t"]
 [ext_resource type="Texture2D" uid="uid://clpkjtx414kkm" path="res://res/kloppenheim_06_puresky_2k.exr" id="1_b7rnw"]
@@ -81,25 +81,6 @@ height = 1.0
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_t1chq"]
 height = 1.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_woqy2"]
-albedo_texture = ExtResource("9_b7rnw")
-uv1_triplanar = true
-
-[sub_resource type="BoxMesh" id="BoxMesh_q3sum"]
-size = Vector3(6, 0.05, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_202rx"]
-size = Vector3(6, 0.05, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sj6ii"]
-albedo_texture = ExtResource("10_7yhca")
-uv1_triplanar = true
-
-[sub_resource type="PrismMesh" id="PrismMesh_q3sum"]
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_202rx"]
-data = PackedVector3Array(0, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6o3kl"]
 albedo_texture = ExtResource("1_1ky7t")
 uv1_triplanar = true
@@ -107,6 +88,43 @@ uv1_triplanar = true
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7hvae"]
 albedo_texture = ExtResource("4_br53r")
 uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_woqy2"]
+albedo_texture = ExtResource("9_b7rnw")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_7yhca"]
+size = Vector3(1, 0.05, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_woqy2"]
+size = Vector3(1, 0.05, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sj6ii"]
+albedo_texture = ExtResource("10_7yhca")
+uv1_triplanar = true
+
+[sub_resource type="PrismMesh" id="PrismMesh_woqy2"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_sj6ii"]
+data = PackedVector3Array(0, 1, 0.5, 0.5, -1, 0.5, -0.5, -1, 0.5, 0, 1, -0.5, -0.5, -1, -0.5, 0.5, -1, -0.5, 0, 1, 0.5, 0, 1, -0.5, 0.5, -1, 0.5, 0, 1, -0.5, 0.5, -1, -0.5, 0.5, -1, 0.5, 0, 1, -0.5, 0, 1, 0.5, -0.5, -1, -0.5, 0, 1, 0.5, -0.5, -1, 0.5, -0.5, -1, -0.5, -0.5, -1, 0.5, 0.5, -1, 0.5, -0.5, -1, -0.5, 0.5, -1, 0.5, 0.5, -1, -0.5, -0.5, -1, -0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b7rnw"]
+size = Vector3(6, 0.05, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7yhca"]
+size = Vector3(6, 0.05, 0.5)
+
+[sub_resource type="PrismMesh" id="PrismMesh_q3sum"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_202rx"]
+data = PackedVector3Array(0, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_q3sum"]
+size = Vector3(6, 0.05, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_202rx"]
+size = Vector3(6, 0.05, 1)
 
 [node name="TestLevel" type="Node3D"]
 
@@ -126,7 +144,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0)
 
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -2)
-mass = 5.0
+mass = 20.0
 physics_material_override = SubResource("PhysicsMaterial_hdcac")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
@@ -138,7 +156,7 @@ shape = SubResource("BoxShape3D_6o3kl")
 
 [node name="RigidBody3D5" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, -2)
-mass = 10.0
+mass = 50.0
 physics_material_override = SubResource("PhysicsMaterial_hdcac")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D5"]
@@ -162,7 +180,7 @@ shape = SubResource("BoxShape3D_7hvae")
 
 [node name="RigidBody3D3" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.5, -2)
-mass = 5.0
+mass = 20.0
 physics_material_override = SubResource("PhysicsMaterial_hdcac")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D3"]
@@ -174,7 +192,7 @@ shape = SubResource("SphereShape3D_t1chq")
 
 [node name="RigidBody3D4" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.5, -2)
-mass = 5.0
+mass = 20.0
 physics_material_override = SubResource("PhysicsMaterial_hdcac")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D4"]
@@ -183,32 +201,6 @@ mesh = SubResource("CylinderMesh_7hvae")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D4"]
 shape = SubResource("CylinderShape3D_t1chq")
-
-[node name="RigidBody3D6" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mass = 20.0
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D6"]
-material_override = SubResource("StandardMaterial3D_woqy2")
-mesh = SubResource("BoxMesh_q3sum")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D6"]
-shape = SubResource("BoxShape3D_202rx")
-
-[node name="HingeJoint3D" type="HingeJoint3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-node_a = NodePath("../StaticBody3D")
-node_b = NodePath("../RigidBody3D6")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-material_override = SubResource("StandardMaterial3D_sj6ii")
-mesh = SubResource("PrismMesh_q3sum")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_202rx")
 
 [node name="Geometry" type="Node3D" parent="."]
 
@@ -237,8 +229,8 @@ depth = 3.0
 [node name="CSGPolygon3D7" type="CSGPolygon3D" parent="Geometry/CSGCombiner3D"]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -3, 4, 3)
 use_collision = true
-polygon = PackedVector2Array(-4, 0, -11, 0, -11, 3, -4, 3, 2, 0)
-depth = 5.0
+polygon = PackedVector2Array(-11, 0, -11, 6, -10, 6, 2, 0)
+depth = 35.8
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Geometry/CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5, -6.5)
@@ -275,3 +267,93 @@ polygon = PackedVector2Array(1.3000001, 0, 1.3000001, 2, 1.1, 2.5, 0.6, 2.9, 0, 
 [node name="CSGPolygon3D5" type="CSGPolygon3D" parent="Geometry/CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 4)
 polygon = PackedVector2Array(1.3000001, 0, 1.3000001, 2, 1.1, 2.5, 0.6, 2.9, 0, 3, -0.6, 2.9, -1.1, 2.5, -1.3000001, 2, -1.3000001, 0, -1.5, 0, -1.5, 4, 1.5, 4, 1.5, 0)
+
+[node name="Scale" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -1, 2)
+
+[node name="RigidBody3D8" type="RigidBody3D" parent="Scale"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5, 0)
+mass = 20.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Scale/RigidBody3D8"]
+material_override = SubResource("StandardMaterial3D_woqy2")
+mesh = SubResource("BoxMesh_7yhca")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Scale/RigidBody3D8"]
+shape = SubResource("BoxShape3D_woqy2")
+
+[node name="RigidBody3D9" type="RigidBody3D" parent="Scale"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5, 0)
+mass = 20.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Scale/RigidBody3D9"]
+material_override = SubResource("StandardMaterial3D_woqy2")
+mesh = SubResource("BoxMesh_7yhca")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Scale/RigidBody3D9"]
+shape = SubResource("BoxShape3D_woqy2")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Scale"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Scale/StaticBody3D2"]
+material_override = SubResource("StandardMaterial3D_sj6ii")
+mesh = SubResource("PrismMesh_woqy2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Scale/StaticBody3D2"]
+shape = SubResource("ConcavePolygonShape3D_sj6ii")
+
+[node name="HingeJoint3D2" type="HingeJoint3D" parent="Scale"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 3, 0)
+node_a = NodePath("../StaticBody3D2")
+node_b = NodePath("../RigidBody3D7")
+
+[node name="RigidBody3D7" type="RigidBody3D" parent="Scale"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 3, 0)
+mass = 20.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Scale/RigidBody3D7"]
+material_override = SubResource("StandardMaterial3D_woqy2")
+mesh = SubResource("BoxMesh_b7rnw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Scale/RigidBody3D7"]
+shape = SubResource("BoxShape3D_7yhca")
+
+[node name="PinJoint3D" type="PinJoint3D" parent="Scale/RigidBody3D7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 0)
+node_a = NodePath("..")
+node_b = NodePath("../../RigidBody3D8")
+
+[node name="PinJoint3D2" type="PinJoint3D" parent="Scale/RigidBody3D7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+node_a = NodePath("..")
+node_b = NodePath("../../RigidBody3D9")
+
+[node name="SeeSaw" type="Node3D" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SeeSaw"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SeeSaw/StaticBody3D"]
+material_override = SubResource("StandardMaterial3D_sj6ii")
+mesh = SubResource("PrismMesh_q3sum")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SeeSaw/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_202rx")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="SeeSaw"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+node_a = NodePath("../StaticBody3D")
+node_b = NodePath("../RigidBody3D6")
+
+[node name="RigidBody3D6" type="RigidBody3D" parent="SeeSaw"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mass = 20.0
+can_sleep = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SeeSaw/RigidBody3D6"]
+material_override = SubResource("StandardMaterial3D_woqy2")
+mesh = SubResource("BoxMesh_q3sum")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SeeSaw/RigidBody3D6"]
+shape = SubResource("BoxShape3D_202rx")

@@ -24,5 +24,7 @@ func parse_command(input: String):
 					add_log("Engine timescale set to %s" % argv[1])
 				else:
 					add_log("Not enough parameters!")
+			"quit":
+				get_tree().quit()
 			_:
 				add_log("Unknown command \"%s\"" % argv[0])
