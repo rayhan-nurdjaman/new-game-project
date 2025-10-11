@@ -8,11 +8,13 @@ extends Node
 
 
 func _ready() -> void:
-	hover_audio_player.stream = ResourceLoader.load("res://assets/audio/Closed_High_Hat.mp3")
-	hover_audio_player.volume_db = -30.0
+	hover_audio_player.stream = ResourceLoader.load("res://res/sounds/ui/select.wav")
+	hover_audio_player.volume_db = -20.0
+	hover_audio_player.bus = "UI"
 	add_child(hover_audio_player)
-	press_audio_player.stream = ResourceLoader.load("res://assets/audio/Brass Bell.mp3")
-	press_audio_player.volume_db = -30.0
+	press_audio_player.stream = ResourceLoader.load("res://res/sounds/ui/chrono.wav")
+	press_audio_player.volume_db = -20.0
+	press_audio_player.bus = "UI"
 	add_child(press_audio_player)
 	button.mouse_entered.connect(_on_button_mouse_entered)
 	button.pressed.connect(_on_button_pressed)

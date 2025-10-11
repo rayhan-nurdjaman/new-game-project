@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dxwrqhxka77lb"]
+[gd_scene load_steps=7 format=3 uid="uid://dxwrqhxka77lb"]
 
 [ext_resource type="Script" uid="uid://c6fblnyp41idq" path="res://src/ui/pause_menu/pause_menu.gd" id="1_tnmsp"]
 [ext_resource type="Theme" uid="uid://ct7oxof1hdkeo" path="res://res/theme.tres" id="2_t0xlp"]
 [ext_resource type="Script" uid="uid://ds0ii545dct55" path="res://src/ui/button_style_components/button_resize_component.gd" id="3_vvyjd"]
+[ext_resource type="Script" uid="uid://dvlm1ln22f2ch" path="res://src/ui/button_style_components/button_sound_component.gd" id="4_j7lcx"]
 
 [sub_resource type="Gradient" id="Gradient_kqx3l"]
 interpolation_mode = 2
@@ -63,6 +64,10 @@ text = "Resume"
 script = ExtResource("3_vvyjd")
 metadata/_custom_type_script = "uid://ds0ii545dct55"
 
+[node name="ButtonSoundComponent" type="Node" parent="TextureRect/MarginContainer/VBoxContainer/VBoxContainer/Resume"]
+script = ExtResource("4_j7lcx")
+metadata/_custom_type_script = "uid://dvlm1ln22f2ch"
+
 [node name="Settings" type="Button" parent="TextureRect/MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
@@ -73,6 +78,10 @@ text = "Settings"
 script = ExtResource("3_vvyjd")
 metadata/_custom_type_script = "uid://ds0ii545dct55"
 
+[node name="ButtonSoundComponent" type="Node" parent="TextureRect/MarginContainer/VBoxContainer/VBoxContainer/Settings"]
+script = ExtResource("4_j7lcx")
+metadata/_custom_type_script = "uid://dvlm1ln22f2ch"
+
 [node name="MainMenu" type="Button" parent="TextureRect/MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
@@ -82,5 +91,9 @@ text = "Main Menu"
 [node name="ButtonResizeComponent" type="Node" parent="TextureRect/MarginContainer/VBoxContainer/VBoxContainer/MainMenu"]
 script = ExtResource("3_vvyjd")
 metadata/_custom_type_script = "uid://ds0ii545dct55"
+
+[node name="ButtonSoundComponent" type="Node" parent="TextureRect/MarginContainer/VBoxContainer/VBoxContainer/MainMenu"]
+script = ExtResource("4_j7lcx")
+metadata/_custom_type_script = "uid://dvlm1ln22f2ch"
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]

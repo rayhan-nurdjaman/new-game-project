@@ -21,6 +21,8 @@ var offset: Vector2 = Vector2.ZERO
 var integral: Vector2 = Vector2.ZERO
 var prev_error: Vector2 = Vector2.ZERO
 
+var step_counter: float = PI/2.0
+
 @onready var viewmodel_initial_transform: Transform3D = viewmodel.transform
 
 
@@ -37,7 +39,14 @@ func _physics_process(delta: float) -> void:
 
 	# Bob the viewmodel while moving
 	var player_projected_velocity = Plane.PLANE_XZ.project(player.linear_velocity).length()
-	viewmodel_bob_phase += player_projected_velocity * BOB_SPEED * delta
+	viewmodel_bob_phase += player_projected_velocity * BOB_SPEED * delta * 3.0 / 2.0
+
+	step_counter += player_projected_velocity * BOB_SPEED * delta * 3.0
+
+	if step_counter >= 2.0*PI:
+		step_counter -= 2.0*PI
+		$AudioStreamPlayer.pitch_scale = randf_range(0.8, 1.2)
+		$AudioStreamPlayer.play()
 
 	var sine: float = sin(viewmodel_bob_phase)
 	var cosine: float = cos(viewmodel_bob_phase)
