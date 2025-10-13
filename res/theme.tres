@@ -41,3 +41,4 @@ ProgressBar/colors/font_color = Color(0, 0, 0, 1)
 ProgressBar/font_sizes/font_size = 24
 ProgressBar/styles/background = SubResource("StyleBoxEmpty_sgwi0")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_2hyyg")
+TabContainer/font_sizes/font_size = 32

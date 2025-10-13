@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://c1jnwms2d5kjv"]
+
+[ext_resource type="Theme" uid="uid://ct7oxof1hdkeo" path="res://res/theme.tres" id="1_s82tg"]
+[ext_resource type="Script" uid="uid://ds0ii545dct55" path="res://src/ui/button_style_components/button_resize_component.gd" id="2_onv8t"]
+[ext_resource type="Script" uid="uid://dvlm1ln22f2ch" path="res://src/ui/button_style_components/button_sound_component.gd" id="3_w37uh"]
+
+[node name="SettingsSubMenu" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_s82tg")
+
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 2
+current_tab = 0
+
+[node name="Audio" type="VBoxContainer" parent="TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Graphics" type="VBoxContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Back" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+focus_mode = 0
+text = "Back"
+
+[node name="ButtonResizeComponent" type="Node" parent="Back"]
+script = ExtResource("2_onv8t")
+metadata/_custom_type_script = "uid://ds0ii545dct55"
+
+[node name="ButtonSoundComponent" type="Node" parent="Back"]
+script = ExtResource("3_w37uh")
+metadata/_custom_type_script = "uid://dvlm1ln22f2ch"

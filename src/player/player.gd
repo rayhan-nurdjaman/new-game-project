@@ -14,11 +14,9 @@ const LEAP_SPEED: float = 5.0
 
 # Object pickup constants
 const PICKUP_DISTANCE: float = 2.0
-# PID constants for object pickup
 const PICKUP_TRANSLATE_KP: float = 1600.0
 const PICKUP_TRANSLATE_KI: float = 0.0
 const PICKUP_TRANSLATE_KD: float = 144.0
-# PID constants for object pickup
 const PICKUP_ROTATE_KP: float = 100.0
 const PICKUP_ROTATE_KI: float = 0.0
 const PICKUP_ROTATE_KD: float = 10.0
@@ -26,15 +24,20 @@ const PICKUP_ROTATE_KD: float = 10.0
 # Throw constants
 const THROW_CHARGE_RATE: float = 2.0  # How fast the throw charges
 const THROW_MIN_FORCE: float = 0.0  # Minimum throw force
-const THROW_MAX_FORCE: float = 10.0  # Maximum throw force
+const THROW_MAX_FORCE: float = 200.0  # Maximum throw force
 
 # Node references
+@export var pivot: Node3D
 @export var camera: Camera3D
 @export var raycast: RayCast3D
 @export var viewmodel_controller: Node3D
 
 # Object pickup variables
+var looking_at_object: Node3D = null
 var held_object: RigidBody3D = null
+var held_object_original_layer: int = 0
+var held_object_original_mask: int = 0
+var held_object_original_orientation: Quaternion = Quaternion.IDENTITY
 var pickup_translation_integral: Vector3 = Vector3.ZERO
 var pickup_angular_integral: Vector3 = Vector3.ZERO
 var apply_reaction_force: bool = false
@@ -43,24 +46,16 @@ var apply_reaction_force: bool = false
 var throw_charging: bool = false
 var throw_charge: float = 0.0
 
-var looking_at_object: Node3D
-
-var held_object_original_layer: int = 0
-var held_object_original_mask: int = 0
-var held_object_original_orientation: Quaternion = Quaternion.IDENTITY
-
 var request_jump: bool = false
-
 var is_on_floor: bool = false
+var move_direction: Vector3 = Vector3.ZERO
 
-
-# Physics variables
 @onready var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
-@onready
-var gravity_vector: Vector3 = ProjectSettings.get_setting("physics/3d/default_gravity_vector")
+@onready var gravity_vector: Vector3 = (
+	ProjectSettings.get_setting("physics/3d/default_gravity_vector")
+)
 @onready var jump_impulse: float = sqrt(2.0 * JUMP_HEIGHT * gravity)
 
-var move_direction: Vector3 = Vector3.ZERO
 
 func px_to_rad(pixels: float) -> float:
 	const SENS: float = 20.8 / 2.0
@@ -83,7 +78,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			var delta_rot = new_rotation - current_rotation
 			camera.rotate(camera.transform.basis.x, delta_rot)
 
-			$Node3D.rotate(Vector3.UP, horizontal_input)
+			pivot.rotate(Vector3.UP, horizontal_input)
 
 			viewmodel_controller.offset += Vector2(horizontal_input, -delta_rot) / 16.0
 
@@ -114,10 +109,10 @@ func pickup_object(object: RigidBody3D) -> void:
 	var held_layer = 4
 	var player_layer = 2
 
-	# Put held object on its own layer (not 1 or 3, which player watches)
+	# Put held object on its own layer
 	held_object.collision_layer = 1 << (held_layer - 1)
 
-	## Collide with everything EXCEPT player, and at least include held_layer
+	# Exclude player collision
 	held_object.collision_mask &= ~(1 << (player_layer - 1))
 
 	pickup_translation_integral = Vector3.ZERO
@@ -127,23 +122,21 @@ func pickup_object(object: RigidBody3D) -> void:
 # TODO: Add initial deadzone so the object isnt thrown
 func throw_object() -> void:
 	if held_object:
-		# TODO: Set original layer and mask on a tween/timer as "i frames"
 		held_object.collision_layer = held_object_original_layer
 		held_object.collision_mask = held_object_original_mask
+		
 		var throw_force: float = lerp(THROW_MIN_FORCE, THROW_MAX_FORCE, throw_charge)
 		var throw_direction: Vector3 = -camera.global_transform.basis.z
 		held_object.apply_central_impulse(throw_direction * throw_force)
-		held_object = null
 		
+		held_object = null
 		pickup_translation_integral = Vector3.ZERO
 		pickup_angular_integral = Vector3.ZERO
 
 
-# Keyboard and player specific
-#TODO: move input outside of this function, solely for processing input
-func update_move_direction() -> void:
-	var basis_z: Vector3 = -$Node3D.get_transform().basis.z  # Negative Z axis is forward
-	var basis_x: Vector3 = $Node3D.get_transform().basis.x
+func update_move_input_keyboard() -> void:
+	var basis_z: Vector3 = -pivot.get_transform().basis.z  # Negative Z axis is forward
+	var basis_x: Vector3 = pivot.get_transform().basis.x
 	var input_forward: float = (
 		Input.get_action_strength("move_forward") - Input.get_action_strength("move_backward")
 	)
@@ -163,6 +156,9 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	var contact_count: int = state.get_contact_count()
 	var max_floor_cosine: float = cos(PI/4.0)
 	var normal: Vector3 = Vector3.ZERO
+	var local_velocity: Vector3 = Vector3.ZERO
+	#var rigidbody_floor: RigidBody3D = null
+	#var contact_point: Vector3 = Vector3.ZERO
 	
 	is_on_floor = false
 	
@@ -170,6 +166,10 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 		normal = state.get_contact_local_normal(contact_id)
 		if normal.dot(Vector3.UP) >= max_floor_cosine:
 			is_on_floor = true
+			#if state.get_contact_collider_object(contact_id) is RigidBody3D:
+				#rigidbody_floor = state.get_contact_collider_object(contact_id)
+			local_velocity = state.get_contact_collider_velocity_at_position(contact_id)
+			#contact_point = state.get_contact_local_position(contact_id)
 			break
 	
 	var rotated_move_direction: Vector3
@@ -177,29 +177,31 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	if is_on_floor:
 		# Custom friction to avoid halting after landing
 		# Negate friction in direction of movement
-		# TODO: take into account slippage (local velocity)
+		var relative_velocity = state.linear_velocity - local_velocity
 		var accel_friction: Vector3 = (
 			gravity
 			* FRICTION
 			* Plane.PLANE_XZ.project(
 				-(
-					state.linear_velocity
-					- max(state.linear_velocity.dot(move_direction), 0.0)
+					relative_velocity
+					- max(relative_velocity.dot(move_direction), 0.0)
 					* move_direction.normalized()
 				).normalized()
 			)
 		)
 		
-		if sign(state.linear_velocity.dot(accel_friction)) != sign((state.linear_velocity + accel_friction * state.step).dot(accel_friction)):
+		if sign(relative_velocity.dot(accel_friction)) != sign((relative_velocity + accel_friction * state.step).dot(accel_friction)):
 			# Friction causes object to move in different direction (static)
 			state.apply_central_impulse(
-				mass * -state.linear_velocity.dot(accel_friction.normalized()) * accel_friction.normalized()
+				mass * -relative_velocity.dot(accel_friction.normalized()) * accel_friction.normalized()
 			)
 		else:
 			# Same direction (kinetic)
 			state.apply_central_force(
 				mass * accel_friction
 			)
+			#if rigidbody_floor:
+				#rigidbody_floor.apply_force(-mass * accel_friction, contact_point - rigidbody_floor.global_transform.origin)
 		
 		# Compensation force on slope
 		var rotation_axis: Vector3 = normal.cross(Vector3.UP)
@@ -252,9 +254,11 @@ func update_held_object(delta: float) -> void:
 	if held_object:
 		# Calculate target position in front of camera
 		# Limit angle so player can't pull themselves up by the bootstraps
-		var clamped_camera_basis: Basis = Basis.IDENTITY
-		clamped_camera_basis = clamped_camera_basis.rotated(Vector3.RIGHT, clamp(camera.rotation.x, -PI/2.0 + 60.0/180.0*PI, PI/2.0))
-		clamped_camera_basis = $Node3D.global_transform.basis * clamped_camera_basis
+		var clamped_camera_basis: Basis = Basis.IDENTITY.rotated(
+			Vector3.RIGHT,
+			clamp(camera.rotation.x, -PI/2.0 + 60.0/180.0*PI, PI/2.0)
+		)
+		clamped_camera_basis = pivot.global_transform.basis * clamped_camera_basis
 		var target_pos: Vector3 = (
 			camera.global_position - clamped_camera_basis.z * PICKUP_DISTANCE
 		)
@@ -292,22 +296,11 @@ func update_held_object(delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	update_move_direction()
+	update_move_input_keyboard()
 	update_held_object(delta)
 	
-	var new_basis := Basis.IDENTITY
-	var angle = float(Input.is_action_just_released("scroll_down")) - float(Input.is_action_just_released("scroll_up"))
-	angle = 0.2 * angle
-	new_basis = new_basis.rotated(camera.transform.basis.z, angle)
-	held_object_original_orientation = new_basis.get_rotation_quaternion() * held_object_original_orientation
-
 	looking_at_object = held_object if held_object else raycast.get_collider()
-
+	
 	# Update throw charge
 	if throw_charging:
 		throw_charge = min(throw_charge + THROW_CHARGE_RATE * delta, 1.0)
-
-	#$Node3D/Camera3D.fov = 90.0 + 5.0 * log(1.0 + 0.5 * Plane.PLANE_XZ.project(linear_velocity).length())
-	
-#void GodotBody3D::integrate_forces(real_t p_step) {
-#void GodotBody3D::integrate_velocities(real_t p_step) {

@@ -1,15 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://ben015ddg3i15"]
+[gd_scene load_steps=7 format=3 uid="uid://ben015ddg3i15"]
 
 [ext_resource type="Script" uid="uid://cx64rhnh30mio" path="res://src/ui/main_menu/main_menu.gd" id="1_2hyyg"]
 [ext_resource type="Script" uid="uid://ds0ii545dct55" path="res://src/ui/button_style_components/button_resize_component.gd" id="2_4ux21"]
 [ext_resource type="Theme" uid="uid://ct7oxof1hdkeo" path="res://res/theme.tres" id="2_osdni"]
 [ext_resource type="FontFile" uid="uid://deklxx44le2h6" path="res://res/fonts/lexend/Lexend-Bold.ttf" id="3_3oi2e"]
 [ext_resource type="Script" uid="uid://dvlm1ln22f2ch" path="res://src/ui/button_style_components/button_sound_component.gd" id="5_vivct"]
+[ext_resource type="PackedScene" uid="uid://c1jnwms2d5kjv" path="res://src/ui/sub_screens/settings_sub_menu.tscn" id="6_6ut4k"]
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource("1_2hyyg")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MainMenuSubScreen" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -17,69 +18,69 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_osdni")
 
-[node name="Polygon2D2" type="Polygon2D" parent="MarginContainer"]
+[node name="Polygon2D2" type="Polygon2D" parent="MainMenuSubScreen"]
 color = Color(0.9411765, 0.47058824, 0, 1)
 polygon = PackedVector2Array(-111, 330, -567, 328, -567, 1201, 419, 1200)
 
-[node name="Polygon2D" type="Polygon2D" parent="MarginContainer"]
+[node name="Polygon2D" type="Polygon2D" parent="MainMenuSubScreen"]
 color = Color(1, 0.5647059, 0, 1)
 polygon = PackedVector2Array(292, -152, -631, -147, -629, 1225, 43, 1222)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenuSubScreen"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="MainMenuSubScreen/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_3oi2e")
 text = "New Game Project"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenuSubScreen/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 
-[node name="Start" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="Start" type="Button" parent="MainMenuSubScreen/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 focus_mode = 0
 text = "Start"
 
-[node name="ButtonResizeComponent" type="Node" parent="MarginContainer/VBoxContainer/VBoxContainer/Start"]
+[node name="ButtonResizeComponent" type="Node" parent="MainMenuSubScreen/VBoxContainer/VBoxContainer/Start"]
 script = ExtResource("2_4ux21")
 metadata/_custom_type_script = "uid://ds0ii545dct55"
 
-[node name="ButtonSoundComponent" type="Node" parent="MarginContainer/VBoxContainer/VBoxContainer/Start"]
+[node name="ButtonSoundComponent" type="Node" parent="MainMenuSubScreen/VBoxContainer/VBoxContainer/Start"]
 script = ExtResource("5_vivct")
 metadata/_custom_type_script = "uid://dvlm1ln22f2ch"
 
-[node name="Settings" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="Settings" type="Button" parent="MainMenuSubScreen/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 focus_mode = 0
 text = "Settings"
 
-[node name="ButtonResizeComponent" type="Node" parent="MarginContainer/VBoxContainer/VBoxContainer/Settings"]
+[node name="ButtonResizeComponent" type="Node" parent="MainMenuSubScreen/VBoxContainer/VBoxContainer/Settings"]
 script = ExtResource("2_4ux21")
 metadata/_custom_type_script = "uid://ds0ii545dct55"
 
-[node name="ButtonSoundComponent" type="Node" parent="MarginContainer/VBoxContainer/VBoxContainer/Settings"]
+[node name="ButtonSoundComponent" type="Node" parent="MainMenuSubScreen/VBoxContainer/VBoxContainer/Settings"]
 script = ExtResource("5_vivct")
 metadata/_custom_type_script = "uid://dvlm1ln22f2ch"
 
-[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="Quit" type="Button" parent="MainMenuSubScreen/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 focus_mode = 0
 text = "Quit"
 
-[node name="ButtonResizeComponent" type="Node" parent="MarginContainer/VBoxContainer/VBoxContainer/Quit"]
+[node name="ButtonResizeComponent" type="Node" parent="MainMenuSubScreen/VBoxContainer/VBoxContainer/Quit"]
 script = ExtResource("2_4ux21")
 metadata/_custom_type_script = "uid://ds0ii545dct55"
 
-[node name="ButtonSoundComponent" type="Node" parent="MarginContainer/VBoxContainer/VBoxContainer/Quit"]
+[node name="ButtonSoundComponent" type="Node" parent="MainMenuSubScreen/VBoxContainer/VBoxContainer/Quit"]
 script = ExtResource("5_vivct")
 metadata/_custom_type_script = "uid://dvlm1ln22f2ch"
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
+[node name="SettingsSubMenu" parent="." instance=ExtResource("6_6ut4k")]

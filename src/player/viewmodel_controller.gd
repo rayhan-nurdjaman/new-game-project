@@ -46,8 +46,8 @@ func _physics_process(delta: float) -> void:
 
 		if step_counter >= 2.0*PI:
 			step_counter -= 2.0*PI
-			$AudioStreamPlayer.pitch_scale = randf_range(0.8, 1.2)
-			$AudioStreamPlayer.play()
+			$"../../../AudioStreamPlayer3D".pitch_scale = randf_range(0.8, 1.2)
+			$"../../../AudioStreamPlayer3D".play()
 
 	var sine: float = sin(viewmodel_bob_phase)
 	var cosine: float = cos(viewmodel_bob_phase)
