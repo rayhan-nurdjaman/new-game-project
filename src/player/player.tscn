@@ -10,6 +10,7 @@
 friction = 0.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4flbx"]
+radius = 0.25
 
 [sub_resource type="SphereMesh" id="SphereMesh_rxibo"]
 radius = 0.1
@@ -43,6 +44,8 @@ shape = SubResource("CapsuleShape3D_4flbx")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 current = true
 fov = 90.0
+near = 0.001
+far = 500.0
 
 [node name="RayCast3D" type="RayCast3D" parent="Pivot/Camera3D"]
 target_position = Vector3(0, 0, -3)

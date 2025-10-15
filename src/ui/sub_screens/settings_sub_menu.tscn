@@ -12,30 +12,82 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_s82tg")
 
-[node name="TabContainer" type="TabContainer" parent="."]
+[node name="Panel" type="Panel" parent="."]
 layout_mode = 2
-current_tab = 0
 
-[node name="Audio" type="VBoxContainer" parent="TabContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
-metadata/_tab_index = 0
 
-[node name="Graphics" type="VBoxContainer" parent="TabContainer"]
-visible = false
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-metadata/_tab_index = 1
 
-[node name="Back" type="Button" parent="."]
+[node name="General" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "General"
+
+[node name="ButtonResizeComponent" type="Node" parent="VBoxContainer/HBoxContainer/General"]
+script = ExtResource("2_onv8t")
+metadata/_custom_type_script = "uid://ds0ii545dct55"
+
+[node name="ButtonSoundComponent" type="Node" parent="VBoxContainer/HBoxContainer/General"]
+script = ExtResource("3_w37uh")
+metadata/_custom_type_script = "uid://dvlm1ln22f2ch"
+
+[node name="Audio" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Audio"
+
+[node name="ButtonResizeComponent" type="Node" parent="VBoxContainer/HBoxContainer/Audio"]
+script = ExtResource("2_onv8t")
+metadata/_custom_type_script = "uid://ds0ii545dct55"
+
+[node name="ButtonSoundComponent" type="Node" parent="VBoxContainer/HBoxContainer/Audio"]
+script = ExtResource("3_w37uh")
+metadata/_custom_type_script = "uid://dvlm1ln22f2ch"
+
+[node name="Video" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Video"
+
+[node name="ButtonResizeComponent" type="Node" parent="VBoxContainer/HBoxContainer/Video"]
+script = ExtResource("2_onv8t")
+metadata/_custom_type_script = "uid://ds0ii545dct55"
+
+[node name="ButtonSoundComponent" type="Node" parent="VBoxContainer/HBoxContainer/Video"]
+script = ExtResource("3_w37uh")
+metadata/_custom_type_script = "uid://dvlm1ln22f2ch"
+
+[node name="Controls" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Controls"
+
+[node name="ButtonResizeComponent" type="Node" parent="VBoxContainer/HBoxContainer/Controls"]
+script = ExtResource("2_onv8t")
+metadata/_custom_type_script = "uid://ds0ii545dct55"
+
+[node name="ButtonSoundComponent" type="Node" parent="VBoxContainer/HBoxContainer/Controls"]
+script = ExtResource("3_w37uh")
+metadata/_custom_type_script = "uid://dvlm1ln22f2ch"
+
+[node name="Control" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Back" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 focus_mode = 0
 text = "Back"
 
-[node name="ButtonResizeComponent" type="Node" parent="Back"]
+[node name="ButtonResizeComponent" type="Node" parent="VBoxContainer/Back"]
 script = ExtResource("2_onv8t")
 metadata/_custom_type_script = "uid://ds0ii545dct55"
 
-[node name="ButtonSoundComponent" type="Node" parent="Back"]
+[node name="ButtonSoundComponent" type="Node" parent="VBoxContainer/Back"]
 script = ExtResource("3_w37uh")
 metadata/_custom_type_script = "uid://dvlm1ln22f2ch"

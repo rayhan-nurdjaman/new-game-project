@@ -21,7 +21,7 @@ func _ready() -> void:
 	$MainMenuSubScreen/VBoxContainer/VBoxContainer/Start.pressed.connect(_on_start_pressed)
 	$MainMenuSubScreen/VBoxContainer/VBoxContainer/Quit.pressed.connect(_on_quit_pressed)
 	$MainMenuSubScreen/VBoxContainer/VBoxContainer/Settings.pressed.connect(_on_settings_pressed)
-	$SettingsSubMenu/Back.pressed.connect(_on_back_pressed)
+	$SettingsSubMenu/VBoxContainer/Back.pressed.connect(_on_back_pressed)
 	$MainMenuSubScreen.position = Vector2(-1920.0, 0.0)
 	$SettingsSubMenu.position = Vector2(1920.0, 0.0)
 

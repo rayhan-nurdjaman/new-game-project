@@ -8,9 +8,11 @@ const ACCEL_GROUND: float = 20.0
 const ACCEL_AIR: float = 10.0
 const SPEED_GROUND: float = 4.0
 const SPEED_AIR: float = 1.0
+const SPEED_CROUCH: float = 2.0
 const FRICTION: float = 1.0
 const JUMP_HEIGHT: float = 1.2
 const LEAP_SPEED: float = 5.0
+const CROUCH_SPEED: float = 3.33
 
 # Object pickup constants
 const PICKUP_DISTANCE: float = 2.0
@@ -47,6 +49,7 @@ var throw_charging: bool = false
 var throw_charge: float = 0.0
 
 var request_jump: bool = false
+var is_crouching: bool = false
 var is_on_floor: bool = false
 var move_direction: Vector3 = Vector3.ZERO
 
@@ -125,7 +128,7 @@ func throw_object() -> void:
 		held_object.collision_layer = held_object_original_layer
 		held_object.collision_mask = held_object_original_mask
 		
-		var throw_force: float = lerp(THROW_MIN_FORCE, THROW_MAX_FORCE, throw_charge)
+		var throw_force: float = lerp(0.0, held_object.mass * 10.0, throw_charge)
 		var throw_direction: Vector3 = -camera.global_transform.basis.z
 		held_object.apply_central_impulse(throw_direction * throw_force)
 		
@@ -151,6 +154,8 @@ func update_move_input_keyboard() -> void:
 	elif Input.is_action_just_released("move_jump"):
 		request_jump = false
 
+	is_crouching = Input.is_action_pressed("move_crouch")
+
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	var contact_count: int = state.get_contact_count()
@@ -174,17 +179,30 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	
 	var rotated_move_direction: Vector3
 	
+	var speed: float
+	var accel: float
+	if is_on_floor:
+		if is_crouching:
+			speed = SPEED_CROUCH
+		else:
+			speed = SPEED_GROUND
+		accel = ACCEL_GROUND
+	else:
+		speed = SPEED_AIR
+		accel = ACCEL_AIR
+	
 	if is_on_floor:
 		# Custom friction to avoid halting after landing
 		# Negate friction in direction of movement
 		var relative_velocity = state.linear_velocity - local_velocity
+		# TODO: Doesnt work when walking then crouching
 		var accel_friction: Vector3 = (
 			gravity
 			* FRICTION
 			* Plane.PLANE_XZ.project(
 				-(
 					relative_velocity
-					- max(relative_velocity.dot(move_direction), 0.0)
+					- min(max(relative_velocity.dot(move_direction), 0.0), speed)
 					* move_direction.normalized()
 				).normalized()
 			)
@@ -220,15 +238,6 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	else: # In air
 		rotated_move_direction = move_direction
 	
-	var speed: float
-	var accel: float
-	if is_on_floor:
-		speed = SPEED_GROUND
-		accel = ACCEL_GROUND
-	else:
-		speed = SPEED_AIR
-		accel = ACCEL_AIR
-	
 	var accel_move: Vector3 = accel * rotated_move_direction
 	var speed_target: float = rotated_move_direction.length() * speed
 	
@@ -242,7 +251,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	if is_on_floor and request_jump:
 		var epsilon: float = 0.05
 		var jump_vector: Vector3 = -gravity_vector
-		if state.linear_velocity.dot(rotated_move_direction) <= LEAP_SPEED:
+		if state.linear_velocity.dot(rotated_move_direction) <= speed * 1.2:
 			jump_vector += 0.2 * rotated_move_direction
 		state.apply_central_impulse(jump_vector * mass * jump_impulse)
 		state.transform.origin.y += epsilon
@@ -268,8 +277,11 @@ func update_held_object(delta: float) -> void:
 		pickup_translation_integral += translation_error * delta
 		var translation_derivative: Vector3 = -held_object.linear_velocity
 		
+		var pickup_translate_kp = held_object.mass * 100.0
+		var pickup_translate_kd = held_object.mass * 10.0
+		
 		var force: Vector3 = (
-			translation_error * PICKUP_TRANSLATE_KP + pickup_translation_integral * PICKUP_TRANSLATE_KI + translation_derivative * PICKUP_TRANSLATE_KD
+			translation_error * pickup_translate_kp + pickup_translation_integral * PICKUP_TRANSLATE_KI + translation_derivative * pickup_translate_kd
 		)
 		
 		held_object.apply_central_force(force)
@@ -288,8 +300,11 @@ func update_held_object(delta: float) -> void:
 		pickup_angular_integral += error_angle_axis * delta
 		var derivative_angular: Vector3 = -held_object.angular_velocity
 
+		var pickup_rotate_kp = held_object.mass * 10.0
+		var pickup_rotate_kd = held_object.mass * 1.0
+
 		var torque: Vector3 = (
-			error_angle_axis * PICKUP_ROTATE_KP + pickup_angular_integral * PICKUP_ROTATE_KI + derivative_angular * PICKUP_ROTATE_KD
+			error_angle_axis * pickup_rotate_kp + pickup_angular_integral * PICKUP_ROTATE_KI + derivative_angular * pickup_rotate_kd
 		)
 		
 		held_object.apply_torque(torque)
@@ -304,3 +319,12 @@ func _physics_process(delta: float) -> void:
 	# Update throw charge
 	if throw_charging:
 		throw_charge = min(throw_charge + THROW_CHARGE_RATE * delta, 1.0)
+	
+	var shape: CapsuleShape3D = $CollisionShape3D.shape
+	var camera_speed: float = 0.25 / (1.0 / CROUCH_SPEED)
+	if is_crouching:
+		shape.height = move_toward(shape.height, 1.0, CROUCH_SPEED * delta)
+		camera.transform.origin.y = move_toward(camera.transform.origin.y, 1.25, camera_speed * delta)
+	else:
+		shape.height = move_toward(shape.height, 2.0, CROUCH_SPEED * delta)
+		camera.transform.origin.y = move_toward(camera.transform.origin.y, 1.5, camera_speed * delta)

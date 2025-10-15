@@ -23,7 +23,7 @@ func _ready() -> void:
 	$PauseMenuSubScreen/VBoxContainer/VBoxContainer/Resume.pressed.connect(_on_resume_pressed)
 	$PauseMenuSubScreen/VBoxContainer/VBoxContainer/MainMenu.pressed.connect(_on_main_menu_pressed)
 	$PauseMenuSubScreen/VBoxContainer/VBoxContainer/Settings.pressed.connect(_on_settings_pressed)
-	$SettingsSubMenu/Back.pressed.connect(_on_back_pressed)
+	$SettingsSubMenu/VBoxContainer/Back.pressed.connect(_on_back_pressed)
 	$PauseMenuSubScreen.position = Vector2(-1920.0, 0.0)
 	$SettingsSubMenu.position = Vector2(1920.0, 0.0)
 
