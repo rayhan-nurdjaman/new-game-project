@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cm3kb2w6fd1ei"]
+
+[ext_resource type="Material" uid="uid://cbwkad74b8kjy" path="res://res/materials/wire.tres" id="1_nksyi"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_nksyi"]
+top_radius = 0.025
+bottom_radius = 0.025
+height = 1.0
+radial_segments = 16
+rings = 2
+
+[node name="Wire" type="MeshInstance3D"]
+material_override = ExtResource("1_nksyi")
+mesh = SubResource("CylinderMesh_nksyi")

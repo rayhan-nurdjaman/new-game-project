@@ -1,0 +1,73 @@
+[gd_scene load_steps=14 format=3 uid="uid://cm252kg811egl"]
+
+[ext_resource type="Script" uid="uid://dymtv08q2p3ym" path="res://src/portal/portal.gd" id="1_3vk0m"]
+[ext_resource type="Shader" uid="uid://drjbx4vgmd4fj" path="res://src/shaders/portal.gdshader" id="2_1jvqa"]
+[ext_resource type="Texture2D" uid="uid://clpkjtx414kkm" path="res://res/hdri/kloppenheim_06_puresky_2k.exr" id="3_1jd3a"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1jd3a"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_x6evi"]
+size = Vector2(2, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1jd3a"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_1jd3a"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dax62"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_1jvqa")
+shader_parameter/viewport_texture = SubResource("ViewportTexture_1jd3a")
+shader_parameter/clip_plane = Vector4(0, 1, 0, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1jd3a"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_t1chq"]
+panorama = ExtResource("3_1jd3a")
+
+[sub_resource type="Sky" id="Sky_q3sum"]
+sky_material = SubResource("PanoramaSkyMaterial_t1chq")
+
+[sub_resource type="Environment" id="Environment_dax62"]
+background_mode = 2
+sky = SubResource("Sky_q3sum")
+sky_rotation = Vector3(0, -9.723229, 0)
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_1jo5v"]
+
+[node name="Portal" type="Node3D"]
+script = ExtResource("1_3vk0m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+visible = false
+layers = 2
+material_override = SubResource("StandardMaterial3D_1jd3a")
+cast_shadow = 0
+mesh = SubResource("QuadMesh_x6evi")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_1jd3a")
+
+[node name="Cube" type="MeshInstance3D" parent="."]
+layers = 2
+material_override = SubResource("ShaderMaterial_dax62")
+mesh = SubResource("BoxMesh_1jd3a")
+skeleton = NodePath("")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+use_hdr_2d = true
+canvas_cull_mask = 4294967293
+size = Vector2i(1280, 720)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+cull_mask = 1048573
+environment = SubResource("Environment_dax62")
+attributes = SubResource("CameraAttributesPractical_1jo5v")
+fov = 90.0

@@ -1,0 +1,179 @@
+[gd_scene load_steps=15 format=3 uid="uid://b0crinh7144tp"]
+
+[ext_resource type="Script" uid="uid://7bj2omu72b4n" path="res://src/apparatus/apparatus.gd" id="1_8cp51"]
+[ext_resource type="Script" uid="uid://b3epixqjbcndx" path="res://src/interact_trigger/interact_trigger.gd" id="1_d5jas"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4eira"]
+size = Vector3(1.8000001, 0.5, 1.8000001)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mfj0h"]
+metallic = 1.0
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_en5f0"]
+render_priority = 1
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0, 1, 1, 1)
+grow = true
+grow_amount = 0.01
+stencil_mode = 3
+stencil_flags = 1
+stencil_compare = 5
+metadata/_stencil_owned = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8cp51"]
+next_pass = SubResource("StandardMaterial3D_en5f0")
+albedo_color = Color(1, 0.49803922, 0.49803922, 1)
+stencil_mode = 1
+stencil_flags = 2
+stencil_color = Color(0, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8cp51"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8cp51"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kj0qk"]
+albedo_color = Color(1, 0.49803922, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jf07x"]
+albedo_color = Color(0.24705882, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v81fr"]
+albedo_color = Color(0.24705882, 0.7490196, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kj0qk"]
+size = Vector3(0.3, 0.15, 1.05)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_152rg"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kj0qk"]
+
+[node name="Apparatus" type="Node3D"]
+script = ExtResource("1_8cp51")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -5.9604645e-08)
+shape = SubResource("BoxShape3D_4eira")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+material_override = SubResource("StandardMaterial3D_mfj0h")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+size = Vector3(1.8000001, 0.5, 1.8000001)
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 0, 0, 1, 0.3, 1.6, 0)
+radius = 0.8
+radial_segments = 16
+rings = 8
+
+[node name="CSGSphere3D2" type="CSGSphere3D" parent="CSGCombiner3D/CSGSphere3D"]
+operation = 2
+radius = 0.7
+radial_segments = 16
+rings = 8
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D/CSGSphere3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+operation = 2
+size = Vector3(2, 1.5, 2)
+
+[node name="CSGTorus3D" type="CSGTorus3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.43301266, -0.24999999, 0.86602545, 0.5, 0.8660254, 0, -0.75, 0.43301272, 0.49999997, 0, 1.4, 0)
+inner_radius = 0.8
+outer_radius = 0.9
+sides = 16
+
+[node name="CSGTorus3D2" type="CSGTorus3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.70710677, -0.70710677, 0, 0.70710677, 0.70710677, 0, 0, 0, 1, 0, 1.4, 0)
+inner_radius = 0.9
+sides = 16
+
+[node name="ButtonArray" type="Node3D" parent="."]
+transform = Transform3D(0.8660254, -0.5, 0, 0.5, 0.8660254, 0, 0, 0, 1, -1.1, 0.5, 0)
+
+[node name="Pink" type="MeshInstance3D" parent="ButtonArray"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.375)
+material_override = SubResource("StandardMaterial3D_8cp51")
+mesh = SubResource("BoxMesh_8cp51")
+
+[node name="InteractTrigger" type="Area3D" parent="ButtonArray/Pink"]
+script = ExtResource("1_d5jas")
+metadata/_custom_type_script = "uid://b3epixqjbcndx"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ButtonArray/Pink/InteractTrigger"]
+shape = SubResource("BoxShape3D_8cp51")
+
+[node name="Magenta" type="MeshInstance3D" parent="ButtonArray"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.125)
+material_override = SubResource("StandardMaterial3D_kj0qk")
+mesh = SubResource("BoxMesh_8cp51")
+
+[node name="InteractTrigger" type="Area3D" parent="ButtonArray/Magenta"]
+script = ExtResource("1_d5jas")
+metadata/_custom_type_script = "uid://b3epixqjbcndx"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ButtonArray/Magenta/InteractTrigger"]
+shape = SubResource("BoxShape3D_8cp51")
+
+[node name="Cyan" type="MeshInstance3D" parent="ButtonArray"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.125)
+material_override = SubResource("StandardMaterial3D_jf07x")
+mesh = SubResource("BoxMesh_8cp51")
+
+[node name="InteractTrigger" type="Area3D" parent="ButtonArray/Cyan"]
+script = ExtResource("1_d5jas")
+metadata/_custom_type_script = "uid://b3epixqjbcndx"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ButtonArray/Cyan/InteractTrigger"]
+shape = SubResource("BoxShape3D_8cp51")
+
+[node name="Blue" type="MeshInstance3D" parent="ButtonArray"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.375)
+material_override = SubResource("StandardMaterial3D_v81fr")
+mesh = SubResource("BoxMesh_8cp51")
+
+[node name="InteractTrigger" type="Area3D" parent="ButtonArray/Blue"]
+script = ExtResource("1_d5jas")
+metadata/_custom_type_script = "uid://b3epixqjbcndx"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ButtonArray/Blue/InteractTrigger"]
+shape = SubResource("BoxShape3D_8cp51")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="ButtonArray"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+material_override = SubResource("StandardMaterial3D_mfj0h")
+mesh = SubResource("BoxMesh_kj0qk")
+
+[node name="Power" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 0.2, 0.9)
+material_override = SubResource("StandardMaterial3D_152rg")
+mesh = SubResource("BoxMesh_8cp51")
+
+[node name="InteractTrigger" type="Area3D" parent="Power"]
+script = ExtResource("1_d5jas")
+metadata/_custom_type_script = "uid://b3epixqjbcndx"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Power/InteractTrigger"]
+shape = SubResource("BoxShape3D_8cp51")
+
+[node name="InteractTrigger" type="Area3D" parent="."]
+script = ExtResource("1_d5jas")
+metadata/_custom_type_script = "uid://b3epixqjbcndx"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 1.6, 0)
+shape = SubResource("BoxShape3D_kj0qk")
+
+[connection signal="interacted" from="ButtonArray/Pink/InteractTrigger" to="." method="_on_pink_interacted"]
+[connection signal="interacted" from="ButtonArray/Magenta/InteractTrigger" to="." method="_on_magenta_interacted"]
+[connection signal="interacted" from="ButtonArray/Cyan/InteractTrigger" to="." method="_on_cyan_interacted"]
+[connection signal="interacted" from="ButtonArray/Blue/InteractTrigger" to="." method="_on_blue_interacted"]
+[connection signal="interacted" from="Power/InteractTrigger" to="." method="_on_power_interacted"]

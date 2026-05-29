@@ -1,9 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://cosflewrtevhb"]
+[gd_scene load_steps=7 format=3 uid="uid://cosflewrtevhb"]
 
 [ext_resource type="Script" uid="uid://f3ke6ankcxq8" path="res://src/player/player.gd" id="1_4flbx"]
-[ext_resource type="Script" uid="uid://d15swdm2cydb1" path="res://src/player/viewmodel_controller.gd" id="2_mf2ua"]
-[ext_resource type="PackedScene" uid="uid://biqnt11x21py0" path="res://res/models/guns/shotgun.glb" id="3_5f2sf"]
-[ext_resource type="PackedScene" uid="uid://jh121k8qhq5w" path="res://res/models/guns/ak47.glb" id="3_244u8"]
+[ext_resource type="PackedScene" uid="uid://bf1gheyr8u3ko" path="res://src/viewmodel/viewmodel.tscn" id="2_x42xx"]
 [ext_resource type="AudioStream" uid="uid://ge1psilspern" path="res://res/sounds/footstep_muffled.wav" id="3_mf2ua"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rxibo"]
@@ -12,11 +10,10 @@ friction = 0.0
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4flbx"]
 radius = 0.25
 
-[sub_resource type="SphereMesh" id="SphereMesh_rxibo"]
-radius = 0.1
-height = 0.2
+[sub_resource type="QuadMesh" id="QuadMesh_mf2ua"]
+size = Vector2(0.3, 0.3)
 
-[node name="Player" type="RigidBody3D" node_paths=PackedStringArray("pivot", "camera", "raycast", "viewmodel_controller")]
+[node name="PlayerCharacter" type="RigidBody3D" node_paths=PackedStringArray("pivot", "camera", "raycast", "viewmodel_controller")]
 collision_layer = 2
 collision_mask = 5
 axis_lock_angular_x = true
@@ -32,13 +29,21 @@ script = ExtResource("1_4flbx")
 pivot = NodePath("Pivot")
 camera = NodePath("Pivot/Camera3D")
 raycast = NodePath("Pivot/Camera3D/RayCast3D")
-viewmodel_controller = NodePath("Pivot/Camera3D/ViewmodelController")
+viewmodel_controller = NodePath("Pivot/Camera3D/Viewmodel")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_4flbx")
 
 [node name="Pivot" type="Node3D" parent="."]
+
+[node name="Marker3D" type="Marker3D" parent="Pivot"]
+transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 1.5, 0)
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pivot/Marker3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+mesh = SubResource("QuadMesh_mf2ua")
 
 [node name="Camera3D" type="Camera3D" parent="Pivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
@@ -52,25 +57,14 @@ target_position = Vector3(0, 0, -3)
 collision_mask = 53
 collide_with_areas = true
 
-[node name="ViewmodelController" type="Node3D" parent="Pivot/Camera3D" node_paths=PackedStringArray("player", "camera", "viewmodel")]
-script = ExtResource("2_mf2ua")
+[node name="Viewmodel" parent="Pivot/Camera3D" node_paths=PackedStringArray("player") instance=ExtResource("2_x42xx")]
 player = NodePath("../../..")
-camera = NodePath("..")
-viewmodel = NodePath("ak472")
-
-[node name="shotgun2" parent="Pivot/Camera3D/ViewmodelController" instance=ExtResource("3_5f2sf")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.17862082, -0.14239204, -0.22105525)
-visible = false
-
-[node name="ak472" parent="Pivot/Camera3D/ViewmodelController" instance=ExtResource("3_244u8")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.17862082, -0.14239204, -0.22105525)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Pivot/Camera3D/ViewmodelController"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.30000007, -0.4)
-visible = false
-mesh = SubResource("SphereMesh_rxibo")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_mf2ua")
 volume_db = -10.0
 bus = &"World"
+
+[node name="CrouchCheck" type="RayCast3D" parent="."]
+target_position = Vector3(0, 1.95, 0)
+collision_mask = 5

@@ -78,17 +78,31 @@ metadata/_custom_type_script = "uid://ds0ii545dct55"
 script = ExtResource("4_j7lcx")
 metadata/_custom_type_script = "uid://dvlm1ln22f2ch"
 
-[node name="MainMenu" type="Button" parent="PauseMenuSubScreen/VBoxContainer/VBoxContainer"]
+[node name="QuitToMenu" type="Button" parent="PauseMenuSubScreen/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 focus_mode = 0
-text = "Main Menu"
+text = "Quit To Menu"
 
-[node name="ButtonResizeComponent" type="Node" parent="PauseMenuSubScreen/VBoxContainer/VBoxContainer/MainMenu"]
+[node name="ButtonResizeComponent" type="Node" parent="PauseMenuSubScreen/VBoxContainer/VBoxContainer/QuitToMenu"]
 script = ExtResource("3_vvyjd")
 metadata/_custom_type_script = "uid://ds0ii545dct55"
 
-[node name="ButtonSoundComponent" type="Node" parent="PauseMenuSubScreen/VBoxContainer/VBoxContainer/MainMenu"]
+[node name="ButtonSoundComponent" type="Node" parent="PauseMenuSubScreen/VBoxContainer/VBoxContainer/QuitToMenu"]
+script = ExtResource("4_j7lcx")
+metadata/_custom_type_script = "uid://dvlm1ln22f2ch"
+
+[node name="QuitToDesktop" type="Button" parent="PauseMenuSubScreen/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+text = "Quit To Desktop"
+
+[node name="ButtonResizeComponent" type="Node" parent="PauseMenuSubScreen/VBoxContainer/VBoxContainer/QuitToDesktop"]
+script = ExtResource("3_vvyjd")
+metadata/_custom_type_script = "uid://ds0ii545dct55"
+
+[node name="ButtonSoundComponent" type="Node" parent="PauseMenuSubScreen/VBoxContainer/VBoxContainer/QuitToDesktop"]
 script = ExtResource("4_j7lcx")
 metadata/_custom_type_script = "uid://dvlm1ln22f2ch"
 

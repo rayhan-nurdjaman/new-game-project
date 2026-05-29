@@ -1,8 +1,40 @@
 extends UIScreen
 
 
+var dialog_boxes: Dictionary
+var dialog_queue: Array
+
+
 func _ready() -> void:
+	DialogServer.dialog_played.connect(_on_dialog_played)
+	DialogServer.dialog_ended.connect(_on_dialog_ended)
 	hide()
+
+
+func _process(_delta: float) -> void:
+	if GameState.player:
+		var is_looking_at_interact_trigger: bool = GameState.player.looking_at_object is InteractTrigger or GameState.player.looking_at_object is RigidBody3D
+		$MarginContainer/CenterContainer/TextureRect.visible = !GameState.player.hide_crosshair and not is_looking_at_interact_trigger
+		$MarginContainer/CenterContainer/TextureRect2.visible = !GameState.player.hide_crosshair and is_looking_at_interact_trigger
+
+
+func _on_dialog_played(dialog: Dialog):
+	var dialog_box_scene: PackedScene = ResourceLoader.load("res://src/dialog_box.tscn")
+	var dialog_box: Control = dialog_box_scene.instantiate()
+	dialog_box.set_text(dialog.subtitle)
+	$DialogBoxContainer.add_child(dialog_box)
+	dialog_box.fade_in()
+	dialog_boxes[dialog.get_instance_id()] = dialog_box
+
+
+func _on_dialog_ended(dialog: Dialog):
+	if not dialog_boxes.has(dialog.get_instance_id()):
+		return
+	var dialog_box = dialog_boxes[dialog.get_instance_id()]
+
+	print(dialog.subtitle)
+	print(dialog_boxes.erase(dialog.get_instance_id()))
+	dialog_box.fade_out()
 
 
 func fade_in():

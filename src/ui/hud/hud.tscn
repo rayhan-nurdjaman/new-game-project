@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dhqyoeojs2xo3"]
+[gd_scene load_steps=5 format=3 uid="uid://dhqyoeojs2xo3"]
 
 [ext_resource type="Script" uid="uid://bohewxpq1lt12" path="res://src/ui/hud/hud.gd" id="1_ny4e7"]
-[ext_resource type="Texture2D" uid="uid://bxmle36ilh78w" path="res://res/crosshair.svg" id="2_cvkdw"]
+[ext_resource type="Texture2D" uid="uid://bxmle36ilh78w" path="res://res/textures/ui/crosshair.svg" id="2_cvkdw"]
 [ext_resource type="Theme" uid="uid://ct7oxof1hdkeo" path="res://res/theme.tres" id="2_udh2q"]
+[ext_resource type="Texture2D" uid="uid://crjbsy7gcdhmn" path="res://res/textures/ui/interaction.svg" id="4_076te"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_ny4e7")
@@ -24,19 +25,29 @@ layout_mode = 2
 layout_mode = 2
 texture = ExtResource("2_cvkdw")
 
-[node name="Label" type="Label" parent="MarginContainer"]
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/CenterContainer"]
 layout_mode = 2
-size_flags_vertical = 8
-theme_override_font_sizes/font_size = 16
-text = "FPS framework built by satiniize
-https://github.com/satiniize/new-game-project"
-horizontal_alignment = 1
-vertical_alignment = 2
+texture = ExtResource("4_076te")
 
-[node name="Label2" type="Label" parent="MarginContainer"]
+[node name="Tooltip" type="Label" parent="MarginContainer"]
+visible = false
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 8
-text = "30 | 30"
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 24
+text = "TESTTEST"
 horizontal_alignment = 1
-vertical_alignment = 2
+vertical_alignment = 1
+
+[node name="DialogBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 320.0
+offset_top = -208.0
+offset_right = -320.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 0
+alignment = 2

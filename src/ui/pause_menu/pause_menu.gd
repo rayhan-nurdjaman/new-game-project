@@ -21,7 +21,8 @@ func create_de_facto_tween() -> Tween:
 
 func _ready() -> void:
 	$PauseMenuSubScreen/VBoxContainer/VBoxContainer/Resume.pressed.connect(_on_resume_pressed)
-	$PauseMenuSubScreen/VBoxContainer/VBoxContainer/MainMenu.pressed.connect(_on_main_menu_pressed)
+	$PauseMenuSubScreen/VBoxContainer/VBoxContainer/QuitToMenu.pressed.connect(_on_quit_to_menu_pressed)
+	$PauseMenuSubScreen/VBoxContainer/VBoxContainer/QuitToDesktop.pressed.connect(_on_quit_to_desktop_pressed)
 	$PauseMenuSubScreen/VBoxContainer/VBoxContainer/Settings.pressed.connect(_on_settings_pressed)
 	$SettingsSubMenu/VBoxContainer/Back.pressed.connect(_on_back_pressed)
 	$PauseMenuSubScreen.position = Vector2(-1920.0, 0.0)
@@ -37,8 +38,12 @@ func _on_settings_pressed():
 	update_subscreen()
 
 
-func _on_main_menu_pressed():
+func _on_quit_to_menu_pressed():
 	SceneLoader.load_scene("main_menu")
+
+
+func _on_quit_to_desktop_pressed():
+	get_tree().quit()
 
 
 func _on_back_pressed():

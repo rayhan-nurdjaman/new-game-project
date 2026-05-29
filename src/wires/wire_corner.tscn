@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cluigv83b1y18"]
+
+[ext_resource type="Material" uid="uid://cbwkad74b8kjy" path="res://res/materials/wire.tres" id="1_w14sj"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_kp0ob"]
+radius = 0.025
+height = 0.05
+radial_segments = 12
+rings = 6
+
+[node name="WireCorner" type="MeshInstance3D"]
+material_override = ExtResource("1_w14sj")
+mesh = SubResource("SphereMesh_kp0ob")

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cl5eaekxll7ek"]
+
+[ext_resource type="ArrayMesh" uid="uid://bot8qtonx737y" path="res://res/models/trees/tree.res" id="1_brfkd"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_nnvrw"]
+height = 4.0
+
+[node name="Tree" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(75, 0, 0, 0, -3.2783541e-06, 75, 0, -75, -3.2783541e-06, 0, 0, 0)
+mesh = ExtResource("1_brfkd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("CylinderShape3D_nnvrw")

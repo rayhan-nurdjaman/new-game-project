@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dypvrla6lwdyh"]
+
+[ext_resource type="Script" uid="uid://ck2e3yk12p42h" path="res://src/light_switch/light_switch.gd" id="1_80vls"]
+[ext_resource type="Script" uid="uid://b3epixqjbcndx" path="res://src/interact_trigger/interact_trigger.gd" id="1_oxl55"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_48s5r"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_80vls"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="LightSwitch" type="Node3D"]
+script = ExtResource("1_80vls")
+
+[node name="InteractTrigger" type="Area3D" parent="."]
+script = ExtResource("1_oxl55")
+metadata/_custom_type_script = "uid://b3epixqjbcndx"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractTrigger"]
+shape = SubResource("BoxShape3D_48s5r")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_80vls")
+
+[connection signal="interacted" from="InteractTrigger" to="." method="_on_interact_trigger_interacted"]

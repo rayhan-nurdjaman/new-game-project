@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://dqf0uye10c01p"]
+
+[ext_resource type="Texture2D" uid="uid://cf2wm3avnp2kc" path="res://res/textures/dev_textures/red/texture_01.png" id="1_bhfws"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q1fkx"]
+albedo_texture = ExtResource("1_bhfws")
+uv1_offset = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_qgpv6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hhgi1"]
+
+[node name="Crate" type="RigidBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_q1fkx")
+mesh = SubResource("BoxMesh_qgpv6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_hhgi1")

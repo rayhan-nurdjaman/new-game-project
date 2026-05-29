@@ -5,9 +5,16 @@ signal level_loaded(level_name)
 signal level_unloaded(level_name)
 
 const PLAYER_PACKED_SCENE: PackedScene = preload("res://src/player/player.tscn")
+const PLAYER_CONTROLLER_PACKED_SCENE: PackedScene = preload("res://src/controllers/player_controller/player_controller.tscn")
 const MAIN_MENU_ID = "main_menu"
+# TODO: Kinda dangerous if someone forgot to change these to a valid path
+# is there a built in godot way for file paths?
+# or maybe just do a debug check over this and see if its a valid path
 const LEVEL_PATHS: Dictionary = {
 	"test_level": "res://src/levels/test_level.tscn",
+	"school_level": "res://src/levels/school_level.tscn",
+	"woods": "res://src/levels/woods.tscn",
+	"lab": "res://src/levels/lab.tscn",
 	MAIN_MENU_ID: "res://src/levels/test_level.tscn",
 }
 
@@ -100,12 +107,15 @@ func _setup_level():
 	if not spawn_point:
 		push_error('No "SpawnPoint" marker node found in level.')
 		return
-
-	var player_node = PLAYER_PACKED_SCENE.instantiate()
-	GameState.player = player_node
-
-	player_node.transform = spawn_point.transform
-	current_scene.add_child(player_node)
+	
+	var player_controller = PLAYER_CONTROLLER_PACKED_SCENE.instantiate()
+	current_scene.add_child(player_controller)
+	
+	var player = PLAYER_PACKED_SCENE.instantiate()
+	GameState.player = player
+	player.transform = spawn_point.transform
+	player.controller = player_controller
+	current_scene.add_child(player)
 	# Hey GameState, I finished loading, please start transition to IN_GAME
 	GameState.change_state_to(GameState.State.IN_GAME)
 

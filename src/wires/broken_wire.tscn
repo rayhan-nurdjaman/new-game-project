@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://bb6bky8a335nm"]
+
+[ext_resource type="Script" uid="uid://bomqdhprkwg64" path="res://src/wires/broken_wire.gd" id="1_0u0lb"]
+[ext_resource type="Script" uid="uid://b3epixqjbcndx" path="res://src/interact_trigger/interact_trigger.gd" id="2_ol608"]
+[ext_resource type="Material" uid="uid://cbwkad74b8kjy" path="res://res/materials/wire.tres" id="2_tustd"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_tustd"]
+top_radius = 0.025
+bottom_radius = 0.025
+height = 1.0
+radial_segments = 16
+rings = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tustd"]
+albedo_color = Color(0.5, 0.25, 0.25, 1)
+roughness = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xufp1"]
+top_radius = 0.025
+bottom_radius = 0.025
+height = 1.0
+radial_segments = 16
+rings = 2
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xe2i4"]
+height = 1.0
+radius = 0.1
+
+[node name="BrokenWire" type="Node3D"]
+script = ExtResource("1_0u0lb")
+
+[node name="HealthyWireMesh" type="MeshInstance3D" parent="."]
+visible = false
+material_override = ExtResource("2_tustd")
+mesh = SubResource("CylinderMesh_tustd")
+
+[node name="BrokenWireMesh" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_tustd")
+mesh = SubResource("CylinderMesh_xufp1")
+
+[node name="InteractTrigger" type="Area3D" parent="."]
+script = ExtResource("2_ol608")
+metadata/_custom_type_script = "uid://b3epixqjbcndx"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractTrigger"]
+shape = SubResource("CylinderShape3D_xe2i4")
+
+[connection signal="interacted" from="InteractTrigger" to="." method="_on_interact_trigger_interacted"]

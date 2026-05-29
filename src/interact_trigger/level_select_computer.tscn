@@ -1,0 +1,94 @@
+[gd_scene load_steps=14 format=4 uid="uid://brjioam8lbkk5"]
+
+[ext_resource type="Script" uid="uid://bwbbtde645cnr" path="res://src/interact_trigger/level_select_computer.gd" id="1_aw5e6"]
+[ext_resource type="Texture2D" path="res://assets/textures/levels/dirty_plastic.png" id="2_735lt"]
+[ext_resource type="Script" uid="uid://b3epixqjbcndx" path="res://src/interact_trigger/interact_trigger.gd" id="3_735lt"]
+[ext_resource type="Material" path="res://assets/materials/white_light.tres" id="4_1tp11"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_735lt"]
+albedo_color = Color(0.39, 0.8475, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wrnkw"]
+material = SubResource("StandardMaterial3D_735lt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1tp11"]
+albedo_texture = ExtResource("2_735lt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5uj31"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_xsgsr"]
+_surfaces = [{
+"aabb": AABB(-0.133333, -0.133333, -0.133333, 0.266667, 0.266667, 0.266667),
+"format": 34896613377,
+"index_count": 132,
+"index_data": PackedByteArray("DgADAA8AEAAOAA8ADgAHAAMADwADAAEAEQAOABAAEQASAA4AEgAHAA4AEgARABMACAADAAcAEgAGAAcAAgADAAgAAgABAAMACAAKAAIACAAHAAkACQAHAAYACAAMAAoACQAMAAgAAgAKAA0ADQAKAAwACQALAAwADQAMAAsAAAALAAkAAAANAAsAAgANAAAACQAGAAAAAAABAAIAAAAGAAEABgAUAAEABgASABQADwABABQAEgATABQAFQAPABQAFQAUABMAEAAPABUAFgAVABMAEAAVABYAFgATABcAEAAWAAQABAAWABcABQAXABMABAAXAAUABQAQAAQABQATABEABQARABAA"),
+"lods": [0.107363, PackedByteArray("AAABAAIAAgABAAMABAADAAEABAABAAUABQABAAYABQAGAAQAAAAGAAEABAAHAAMABgAHAAQAAgADAAgACAADAAcACQAHAAYACAAHAAkACQAGAAAACAAKAAIAAAALAAkACQAMAAgACAAMAAoACQALAAwAAgAKAA0AAgANAAAADQAKAAwAAAANAAsADQAMAAsA")],
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("/x//T///AAAAAP////8AAP8f/9/+/wAA/v////7/AACY2cwcAAAAAGYmzBwAAAAAAAAAAP//AAD//wAA//8AAP/f/9///wAA/9//T///AAD/H//fy+wAAP/f/0/L7AAA/9//38vsAAD/H/9Py+wAAP//AAD/vwAA//////+/AAD34qEO/38AAAcdoQ7/fwAAAAAAAP+/AAAHHeri/38AAAAA////vwAA9+Lq4v9/AACY2cy8AAAAAGYmzLwAAAAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_bsyc2"]
+resource_name = "computer_Cube_001"
+_surfaces = [{
+"aabb": AABB(-0.133333, -0.133333, -0.133333, 0.266667, 0.266667, 0.266667),
+"attribute_data": PackedByteArray("eaM1n5ltAKlldzWfmW2jWva7AKlld29keaNvZPa7o1paeV79mW1CrjWwXv32u0KuV2ge1TcfXv2gAiaytgO3ZFdoWUIfId8bvelNKZ7vYVW96WFVnu9NKYnrFeio5U+tietPrajlFei1qWFVe+RNKXvkYVW1qU0py/ABvKv2FejL8BXoq/YBvHvkKx61qQsktakrHnvkCySwMwD1lRYUryVFmegtFtRoVDM5IwgrzarDLCVtIlUfpxRFSC+nVV5wmW3Zwfa72cF8dvLVE7Py1XSkaCSZbWFVmW1oJHSkYVU="),
+"format": 34896613399,
+"index_count": 132,
+"index_data": PackedByteArray("JgAOACcAJgANAA4AJwAOAA8AKAAmACcAJwAPACkAEQApAA8AEQAqACkAKwAnACkAKAAnACsAKgAsACkAKwApACwAKAArAC0AKAAtAAwALQArACwAKgAuACwALQAsAC8AEAAsAC4AEAAvACwAMAALADEAMAAJAAsAMgAwADEAMgAxADMACAAyADMACAAzAAoAAAABAAIAAgABAAMAAAAEAAEAAgADAAUABgAEAAAABQADAAcABgAHAAQABQAHAAYAEgATABQAEgAVABMAFgAXABgAFgAZABcAGgAbABwAGgAdABsAHgAfACAAHgAhAB8ANAA1ADYANAA3ADUAIgAjACQAIgAlACMA"),
+"lods": [0.107363, PackedByteArray("AAABAAIAAgABAAMAAAAEAAEAAgADAAUABgAEAAAABQADAAcABgAHAAQABQAHAAYACAAJAAoACQALAAoADAANAA4ADAAOAA8ADAAPABAAEAAPABEAEgATABQAEgAVABMAFgAXABgAFgAZABcAGgAbABwAGgAdABsAHgAfACAAHgAhAB8AIgAjACQAIgAlACMA")],
+"material": SubResource("StandardMaterial3D_5uj31"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 56,
+"vertex_data": PackedByteArray("/x//T////78AAP////9z0f8f/9/+/+PD/v////7/SsAAAAAA//9KwP/f/9////+//9//T///48P//wAA//900WYmzBwAAB/kAAAAAP//QKiY2cwcAAAf5P//AAD//0ComNnMHAAAGeP//wAA//++uf7////+/+qtAAD/////J+pmJswcAAAS6wAAAAD//+LZ/9//T///z+D/3//fy+y94//f/9///8/g/9//T8vsveP/H/9P///P4P/f/0/L7Jax/9//T///daT/H/9Py+y94/8f/0/L7D+o/9//38vsP6j/3/9Py+w/qP8f/9/L7D+o/x//3/7/daT/H/9Py+yWsf8f/0///3Wk/x//38vslrH/3//f//8Pkv8f/9/L7D+o/x//3/7/D5L/3//fy+w/qP//AAD/v23T//////+/4s334qEO/38P2QAA////vyHxAAAAAP+/DuL34uri/3/N1Acd6uL/f7rxmNnMvAAAmt4HHaEO/3+44WYmzLwAAKT4AAAAAP+/itD//wAA/7+K0AcdoQ7/f3DT9+KhDv9/cNOY2cwcAAAf5GYmzLwAAK/nZibMHAAAH+SY2cy8AACv5y+fN3+0ec2vwID4YTe3unjFSEWHz2DHgD5/Bp5LhjFQ3SVQipxCGa9RCiJaGS9iPQV0BCY7csRHPMUlHmbtfyPeLM9zAVXjdPv2xBW+WSdwO2r7dibwQCbDlQOJ8JfMuT2QNadAptePYr3lUJxCGa/k0JzCGi9iPcFvyVgxxvEXyNg9EA5oMkY0Q9G5Gi9iPdI5yjycQhmv+3J2MXO32SJhc18xd+M9Ni067nRTtzonueGWOrexGCmnN+5y2N6TP5g1zZbOFmdK6S8ZkxoTFVBRCiJa2fZmpd0lUIqY2tp2")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_xsgsr")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aw5e6"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_74axi"]
+material = ExtResource("4_1tp11")
+size = Vector2(0.64, 0.475)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1tp11"]
+size = Vector3(0.8, 0.8, 0.8)
+
+[node name="LevelSelectComputer" type="Node3D"]
+script = ExtResource("1_aw5e6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("BoxMesh_wrnkw")
+
+[node name="computer" type="Node3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.4, 0)
+
+[node name="Cube" type="MeshInstance3D" parent="computer"]
+material_override = SubResource("StandardMaterial3D_1tp11")
+mesh = SubResource("ArrayMesh_bsyc2")
+skeleton = NodePath("")
+
+[node name="InteractTrigger" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+script = ExtResource("3_735lt")
+tooltip = "Press \"E\" to open your inbox"
+metadata/_custom_type_script = "uid://b3epixqjbcndx"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractTrigger"]
+shape = SubResource("BoxShape3D_aw5e6")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.483084, 0.345884)
+mesh = SubResource("QuadMesh_74axi")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.98023e-08, 0.4, -2.98023e-08)
+shape = SubResource("BoxShape3D_1tp11")
+
+[connection signal="interacted" from="InteractTrigger" to="." method="_on_interact_trigger_interacted"]
